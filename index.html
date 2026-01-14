@@ -855,7 +855,7 @@
     <!-- Dashboard Section -->
     <section id="dashboard" class="mb-12">
         <!-- Hero Section -->
-        <div class="card p-8 mb-8 text-center">
+        <div class="luxury-card reveal p-8 mb-8 text-center">
             <h2 class="text-4xl font-bold mb-2">Eric J. Miller</h2>
             <p class="text-2xl mb-4" style="color: var(--secondary);">High-Risk Smoldering Multiple Myeloma</p>
             <div class="flex justify-center items-center space-x-6 text-sm flex-wrap">
@@ -875,7 +875,7 @@
 
         <!-- Quick Stats -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <div class="card p-6 stat-card">
+            <div class="luxury-card reveal p-6 stat-card">
                 <div class="flex items-center justify-between mb-2">
                     <i class="fas fa-dna text-3xl" style="color: var(--secondary);"></i>
                     <span class="high-risk text-sm">HIGH-RISK</span>
@@ -885,7 +885,7 @@
                 <p class="text-sm text-gray-600">TP53 abnormal (3 copies)</p>
             </div>
             
-            <div class="card p-6 stat-card">
+            <div class="luxury-card reveal p-6 stat-card">
                 <div class="flex items-center justify-between mb-2">
                     <i class="fas fa-syringe text-3xl" style="color: var(--secondary);"></i>
                     <span class="text-sm text-green-600 font-semibold">ACTIVE</span>
@@ -895,7 +895,7 @@
                 <p class="text-sm text-gray-600">Started: 12/21/2025</p>
             </div>
             
-            <div class="card p-6 stat-card">
+            <div class="luxury-card reveal p-6 stat-card">
                 <div class="flex items-center justify-between mb-2">
                     <i class="fas fa-check-circle text-3xl text-green-600"></i>
                     <span class="text-sm text-green-600 font-semibold">EXCELLENT</span>
@@ -905,7 +905,7 @@
                 <p class="text-sm text-gray-600">Hgb: 17.0 ✓</p>
             </div>
             
-            <div class="card p-6 stat-card">
+            <div class="luxury-card reveal p-6 stat-card">
                 <div class="flex items-center justify-between mb-2">
                     <i class="fas fa-clock text-3xl" style="color: var(--accent);"></i>
                     <span class="text-sm" style="color: var(--accent);">UPCOMING</span>
@@ -918,7 +918,7 @@
 
         
         <!-- Interactive DNA Visualization -->
-        <div class="card p-6 mb-8">
+        <div class="luxury-card reveal p-6 mb-8">
             <h3 class="text-xl font-bold mb-4" style="color: var(--primary);"><i class="fas fa-dna mr-2"></i>🧬 Your Genetic Profile - Interactive Visualization</h3>
             <p class="text-gray-600 mb-4">This animated DNA helix highlights your genetic abnormalities. The highlighted regions show where your 1q21 gain and TP53 abnormality are located.</p>
             <div id="dna-container" style="background: linear-gradient(135deg, #1e3a5f 0%, #0f172a 100%); border-radius: 12px; padding: 20px;">
@@ -928,7 +928,7 @@
 
 <!-- Navigation Tiles -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-            <div class="card p-6 cursor-pointer" onclick="scrollToSection('diagnostics')">
+            <div class="luxury-card reveal p-6 cursor-pointer" onclick="scrollToSection('diagnostics')">
                 <div class="flex items-center mb-4">
                     <i class="fas fa-microscope text-4xl mr-4" style="color: var(--primary);"></i>
                     <h3 class="text-xl font-bold">Diagnostic Results</h3>
@@ -942,7 +942,7 @@
                 <button class="text-sm font-semibold" style="color: var(--primary);">VIEW DETAILS →</button>
             </div>
             
-            <div class="card p-6 cursor-pointer" onclick="scrollToSection('treatment')">
+            <div class="luxury-card reveal p-6 cursor-pointer" onclick="scrollToSection('treatment')">
                 <div class="flex items-center mb-4">
                     <i class="fas fa-pills text-4xl mr-4" style="color: var(--primary);"></i>
                     <h3 class="text-xl font-bold">Treatment Plan</h3>
@@ -956,7 +956,7 @@
                 <button class="text-sm font-semibold" style="color: var(--primary);">VIEW DETAILS →</button>
             </div>
             
-            <div class="card p-6 cursor-pointer" onclick="scrollToSection('prognosis')">
+            <div class="luxury-card reveal p-6 cursor-pointer" onclick="scrollToSection('prognosis')">
                 <div class="flex items-center mb-4">
                     <i class="fas fa-chart-line text-4xl mr-4" style="color: var(--primary);"></i>
                     <h3 class="text-xl font-bold">Prognosis Calculator</h3>
@@ -972,7 +972,7 @@
         </div>
 
         <!-- Timeline -->
-        <div class="card p-8">
+        <div class="luxury-card reveal p-8">
             <h3 class="text-2xl font-bold mb-6">Medical Timeline</h3>
             <div class="space-y-4">
                 <div class="timeline-item">
@@ -1005,10 +1005,10 @@
 
     <!-- Diagnostics Section -->
     <section id="diagnostics" class="mb-12">
-        <h2 class="text-3xl font-bold mb-6">Diagnostic Results</h2>
+        <h2 class="display-medium reveal">Diagnostic Results</h2>
         
         <!-- Tabs -->
-        <div class="card mb-6">
+        <div class="luxury-card reveal mb-6">
             <div class="flex border-b overflow-x-auto no-print">
                 <button class="tab-button active" onclick="switchTab('bone-marrow')">Bone Marrow</button>
                 <button class="tab-button" onclick="switchTab('fish')">FISH Panel</button>
@@ -1452,7 +1452,7 @@
                 </div>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                    <div class="card p-6" style="background: linear-gradient(135deg, #10B981 0%, #059669 100%); color: white;">
+                    <div class="luxury-card reveal p-6" style="background: linear-gradient(135deg, #10B981 0%, #059669 100%); color: white;">
                         <h4 class="font-bold text-xl mb-4">Clinical Interpretation</h4>
                         <ul class="space-y-3">
                             <li class="flex items-start">
@@ -1474,7 +1474,7 @@
                         </ul>
                     </div>
                     
-                    <div class="card p-6" style="background: linear-gradient(135deg, #3B82F6 0%, #1E40AF 100%); color: white;">
+                    <div class="luxury-card reveal p-6" style="background: linear-gradient(135deg, #3B82F6 0%, #1E40AF 100%); color: white;">
                         <h4 class="font-bold text-xl mb-4">Next Steps</h4>
                         <div class="space-y-4">
                             <div>
@@ -1595,7 +1595,7 @@
                 </div>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                    <div class="card p-6" style="background: linear-gradient(135deg, #10B981 0%, #059669 100%); color: white;">
+                    <div class="luxury-card reveal p-6" style="background: linear-gradient(135deg, #10B981 0%, #059669 100%); color: white;">
                         <h4 class="font-bold text-xl mb-4">Clinical Interpretation</h4>
                         <ul class="space-y-3">
                             <li class="flex items-start">
@@ -1617,7 +1617,7 @@
                         </ul>
                     </div>
                     
-                    <div class="card p-6" style="background: linear-gradient(135deg, #3B82F6 0%, #1E40AF 100%); color: white;">
+                    <div class="luxury-card reveal p-6" style="background: linear-gradient(135deg, #3B82F6 0%, #1E40AF 100%); color: white;">
                         <h4 class="font-bold text-xl mb-4">Next Steps</h4>
                         <div class="space-y-4">
                             <div>
@@ -1650,10 +1650,10 @@
 
     <!-- Treatment Section -->
     <section id="treatment" class="mb-12">
-        <h2 class="text-3xl font-bold mb-6">Treatment Plan</h2>
+        <h2 class="display-medium reveal">Treatment Plan</h2>
         
         <!-- Treatment Timeline -->
-        <div class="card p-8 mb-8">
+        <div class="luxury-card reveal p-8 mb-8">
             <h3 class="text-2xl font-bold mb-6">Treatment Roadmap</h3>
 
             <div class="mb-4 flex items-center text-sm text-gray-600">
@@ -1717,7 +1717,7 @@
         </div>
 
         <!-- Daratumumab Drug Mechanisms -->
-        <div class="card p-8 mb-8">
+        <div class="luxury-card reveal p-8 mb-8">
             <h3 class="text-2xl font-bold mb-6">Daratumumab Monotherapy: How It Works</h3>
             <p class="text-gray-700 mb-6">Daratumumab attacking your myeloma from different angles:</p>
             
@@ -1783,7 +1783,7 @@
             
             
             <!-- Interactive Drug Mechanism Animation -->
-            <div class="card p-6 mb-6">
+            <div class="luxury-card reveal p-6 mb-6">
                 <h4 class="text-xl font-bold mb-4" style="color: var(--primary);"><i class="fas fa-crosshairs mr-2"></i>Watch How Daratumumab Attacks Your Cancer</h4>
                 <p class="text-gray-600 mb-4">This animation shows how antibodies bind to CD38 receptors on your myeloma cells and trigger cell death.</p>
                 <div style="background: #f8fafc; border-radius: 12px; padding: 20px;">
@@ -1815,7 +1815,7 @@
         </div>
 
         <!-- MRD Monitoring -->
-        <div class="card p-8 mb-8">
+        <div class="luxury-card reveal p-8 mb-8">
             <h3 class="text-2xl font-bold mb-6">MRD Monitoring Schedule</h3>
             
             <div class="bg-blue-50 border-l-4 border-blue-500 p-6 mb-6">
@@ -1832,7 +1832,7 @@
             
             <h4 class="font-bold text-lg mb-4">YOUR Personalized MRD Timeline:</h4>
             <div class="space-y-4">
-                <div class="card p-4 border-l-4" style="border-color: var(--accent);">
+                <div class="luxury-card reveal p-4 border-l-4" style="border-color: var(--accent);">
                     <div class="flex items-start">
                         <i class="fas fa-calendar-check text-2xl mr-4" style="color: var(--accent);"></i>
                         <div class="flex-1">
@@ -1843,7 +1843,7 @@
                     </div>
                 </div>
                 
-                <div class="card p-4 border-l-4 border-blue-500">
+                <div class="luxury-card reveal p-4 border-l-4 border-blue-500">
                     <div class="flex items-start">
                         <i class="fas fa-calendar-check text-2xl mr-4 text-blue-500"></i>
                         <div class="flex-1">
@@ -1854,7 +1854,7 @@
                     </div>
                 </div>
                 
-                <div class="card p-4 border-l-4 border-green-500">
+                <div class="luxury-card reveal p-4 border-l-4 border-green-500">
                     <div class="flex items-start">
                         <i class="fas fa-calendar-check text-2xl mr-4 text-green-500"></i>
                         <div class="flex-1">
@@ -1865,7 +1865,7 @@
                     </div>
                 </div>
                 
-                <div class="card p-4 border-l-4 border-purple-500">
+                <div class="luxury-card reveal p-4 border-l-4 border-purple-500">
                     <div class="flex items-start">
                         <i class="fas fa-calendar-alt text-2xl mr-4 text-purple-500"></i>
                         <div class="flex-1">
@@ -1878,7 +1878,7 @@
         </div>
 
         <!-- CAR-T Quick Info -->
-        <div class="card p-8">
+        <div class="luxury-card reveal p-8">
             <h3 class="text-2xl font-bold mb-6">CAR-T Cell Therapy (Backup Option)</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
@@ -1925,10 +1925,10 @@
 
     <!-- Prognosis Section -->
     <section id="prognosis" class="mb-12">
-        <h2 class="text-3xl font-bold mb-6">Prognosis & Life Expectancy</h2>
+        <h2 class="display-medium reveal">Prognosis & Life Expectancy</h2>
         
         <!-- Survival Calculator -->
-        <div class="card p-8 mb-8">
+        <div class="luxury-card reveal p-8 mb-8">
             <h3 class="text-2xl font-bold mb-6">YOUR Personalized Survival Calculator</h3>
             
             <div class="mb-8">
@@ -2024,7 +2024,7 @@
         </div>
 
         <!-- Quality of Life Timeline Chart -->
-        <div class="card p-8 mb-8">
+        <div class="luxury-card reveal p-8 mb-8">
             <h3 class="text-2xl font-bold mb-6">Expected Quality of Life Trajectory</h3>
             <div class="chart-container">
                 <canvas id="qolChart"></canvas>
@@ -2050,7 +2050,7 @@
         </div>
 
         <!-- What Will Degrade -->
-        <div class="card p-8">
+        <div class="luxury-card reveal p-8">
             <h3 class="text-2xl font-bold mb-6">What Will Degrade Over Time</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
@@ -2132,11 +2132,11 @@
 
     <!-- Resources Section -->
     <section id="resources" class="mb-12">
-        <h2 class="text-3xl font-bold mb-6">Patient Resources & Tools</h2>
+        <h2 class="display-medium reveal">Patient Resources & Tools</h2>
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <!-- Appointment Tools -->
-            <div class="card p-6">
+            <div class="luxury-card reveal p-6">
                 <i class="fas fa-clipboard-list text-4xl mb-4" style="color: var(--primary);"></i>
                 <h3 class="font-bold text-lg mb-3">Appointment Tools</h3>
                 <ul class="space-y-2 text-sm">
@@ -2148,7 +2148,7 @@
             </div>
             
             <!-- Diagnostic Reports -->
-            <div class="card p-6">
+            <div class="luxury-card reveal p-6">
                 <i class="fas fa-file-medical text-4xl mb-4" style="color: var(--primary);"></i>
                 <h3 class="font-bold text-lg mb-3">Diagnostic Reports</h3>
                 <ul class="space-y-2 text-sm">
@@ -2160,7 +2160,7 @@
             </div>
             
             <!-- Treatment Guides -->
-            <div class="card p-6">
+            <div class="luxury-card reveal p-6">
                 <i class="fas fa-book-medical text-4xl mb-4" style="color: var(--primary);"></i>
                 <h3 class="font-bold text-lg mb-3">Treatment Guides</h3>
                 <ul class="space-y-2 text-sm">
@@ -2172,7 +2172,7 @@
             </div>
             
             <!-- External Resources -->
-            <div class="card p-6">
+            <div class="luxury-card reveal p-6">
                 <i class="fas fa-external-link-alt text-4xl mb-4" style="color: var(--primary);"></i>
                 <h3 class="font-bold text-lg mb-3">External Resources</h3>
                 <ul class="space-y-2 text-sm">
@@ -2184,7 +2184,7 @@
             </div>
             
             <!-- Quick Actions -->
-            <div class="card p-6" style="background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); color: white;">
+            <div class="luxury-card reveal p-6" style="background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); color: white;">
                 <i class="fas fa-bolt text-4xl mb-4"></i>
                 <h3 class="font-bold text-lg mb-3">Quick Actions</h3>
                 <div class="space-y-2">
@@ -2401,6 +2401,40 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
 <script src="js/animations.js"></script>
     <script src="js/lab-entry.js"></script>
+
+<script>
+    // Luxury reveal animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, observerOptions);
+    
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.reveal, .stagger-fade').forEach(el => {
+            revealObserver.observe(el);
+        });
+        
+        // Nav scroll effect
+        const nav = document.querySelector('.luxury-nav');
+        if (nav) {
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    nav.classList.add('scrolled');
+                } else {
+                    nav.classList.remove('scrolled');
+                }
+            });
+        }
+    });
+</script>
 </body>
 </html>
     
