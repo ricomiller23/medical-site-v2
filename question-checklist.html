@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment Questions - V2</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; padding: 20px; max-width: 750px; margin: 0 auto; background: #f9fafb; }
+        h1, h2 { color: #1E3A8A; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px; }
+        .print-btn { background: linear-gradient(135deg, #1E3A8A, #3b82f6); color: white; padding: 12px 24px; border: none; border-radius: 10px; cursor: pointer; font-weight: 600; }
+        .checklist { list-style: none; padding: 0; }
+        .checklist li { padding: 14px; margin: 10px 0; background: white; border-radius: 10px; border-left: 4px solid #1E3A8A; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .checklist li::before { content: "☐ "; font-size: 1.3em; }
+        .section { margin: 30px 0; }
+        .values { background: linear-gradient(135deg, #d1fae5, #a7f3d0); padding: 20px; border-radius: 12px; margin: 20px 0; }
+        .note { background: #fef3c7; padding: 16px; border-radius: 10px; margin: 20px 0; border-left: 4px solid #f59e0b; }
+        @media print { .no-print { display: none; } body { background: white; } }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📋 Week 4 Appointment Questions</h1>
+        <button class="print-btn no-print" onclick="window.print()">🖨️ Print</button>
+    </div>
+    
+    <p><strong>Patient:</strong> Eric J. Miller | <strong>Appointment:</strong> Week 4 Labs (Jan 18, 2026)</p>
+    
+    <div class="values">
+        <h3 style="margin-top:0;">📊 Your Latest Values (Week 3 - 01/09/2026)</h3>
+        <p><strong>CBC:</strong> WBC 9.0 ↑ | Hgb 17.0 ↑ | Plt 241 ↑ | ANC 6.2 ↑</p>
+        <p><strong>Kidney:</strong> eGFR 103 (Excellent!) | Creatinine 0.78</p>
+        <p><strong>Note:</strong> Low Sodium (134) & Chloride (92) - discuss hydration</p>
+        <p><strong>Baseline Free Kappa:</strong> 655.69 mg/L → Target: ≤328 (50% reduction)</p>
+    </div>
+    
+    <div class="section">
+        <h2>❓ Questions About Week 4 Results</h2>
+        <ul class="checklist">
+            <li>What are my Free Kappa results? Did I achieve ≥50% reduction?</li>
+            <li>What does my M-spike show?</li>
+            <li>Is my response rate on track for the planned timeline?</li>
+            <li>Should we escalate to full D-RVd quadruplet now?</li>
+        </ul>
+    </div>
+    
+    <div class="section">
+        <h2>🧪 Questions About Electrolytes</h2>
+        <ul class="checklist">
+            <li>My sodium (134) and chloride (92) were low - is this concerning?</li>
+            <li>Should I take electrolyte supplements?</li>
+            <li>How much water should I drink daily?</li>
+        </ul>
+    </div>
+    
+    <div class="section">
+        <h2>💊 Questions About Treatment</h2>
+        <ul class="checklist">
+            <li>When will Lenalidomide and Bortezomib be added?</li>
+            <li>What side effects should I watch for with each new drug?</li>
+            <li>What is the neuropathy risk and how do we minimize it?</li>
+        </ul>
+    </div>
+    
+    <div class="section">
+        <h2>🎯 Long-term Questions</h2>
+        <ul class="checklist">
+            <li>When is my first MRD test scheduled?</li>
+            <li>Am I still a candidate for treatment holidays if MRD-negative?</li>
+            <li>Are there any clinical trials I should consider?</li>
+        </ul>
+    </div>
+    
+    <div class="note">
+        <strong>💡 Tip:</strong> Write your Free Kappa result here when you get it: _________ mg/L<br>
+        <small>Calculate: (Baseline 655.69 - New Value) / 655.69 × 100 = ___% reduction</small>
+    </div>
+    
+    <hr>
+    <p style="font-size: 12px; color: #6b7280; text-align: center;">
+        V2 | Updated: January 14, 2026 | <a href="index.html">← Back to Portal</a>
+    </p>
+</body>
+</html>

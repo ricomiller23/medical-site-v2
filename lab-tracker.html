@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eric J. Miller - Lab Tracker V2</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; padding: 20px; max-width: 1000px; margin: 0 auto; background: #f9fafb; }
+        h1 { color: #1E3A8A; display: flex; align-items: center; gap: 10px; }
+        h2 { color: #1e40af; border-bottom: 2px solid #ddd6fe; padding-bottom: 8px; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        th, td { border: 1px solid #e5e7eb; padding: 12px; text-align: left; }
+        th { background: linear-gradient(135deg, #1E3A8A, #3b82f6); color: white; }
+        tr:nth-child(even) { background: #f9fafb; }
+        tr:hover { background: #eff6ff; }
+        .normal { color: #10B981; font-weight: bold; }
+        .high { color: #EF4444; font-weight: bold; }
+        .low { color: #F59E0B; font-weight: bold; }
+        .header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+        .print-btn { background: linear-gradient(135deg, #1E3A8A, #3b82f6); color: white; padding: 12px 24px; border: none; border-radius: 10px; cursor: pointer; font-weight: 600; transition: transform 0.2s; }
+        .print-btn:hover { transform: translateY(-2px); }
+        .trend { font-size: 12px; color: #6b7280; }
+        .trend.up { color: #10b981; }
+        .trend.down { color: #f59e0b; }
+        .badge { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+        .badge-latest { background: #dbeafe; color: #1e40af; }
+        .badge-normal { background: #d1fae5; color: #065f46; }
+        .summary-card { background: linear-gradient(135deg, #10b981, #059669); color: white; padding: 20px; border-radius: 12px; margin: 20px 0; }
+        @media print { .no-print { display: none; } body { background: white; } }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🧪 Eric J. Miller - Lab Tracker <span class="badge badge-latest">V2</span></h1>
+        <button class="print-btn no-print" onclick="window.print()">📄 Print / Save PDF</button>
+    </div>
+    
+    <p><strong>Diagnosis:</strong> High-Risk Smoldering Multiple Myeloma | <strong>Treatment:</strong> Daratumumab (started 12/21/2025)</p>
+    
+    <div class="summary-card">
+        <h3 style="margin-top:0;">�� Quick Summary</h3>
+        <p>All CBC values trending stable/improving. Excellent kidney function (eGFR 103). Minor electrolyte issue (low Na/Cl) - stay hydrated.</p>
+    </div>
+    
+    <h2>📈 Complete Blood Count (CBC) Trends</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>WBC<br><small>(4.0-11.0)</small></th>
+                <th>Hemoglobin<br><small>(13.5-17.0)</small></th>
+                <th>Platelets<br><small>(130-450)</small></th>
+                <th>ANC<br><small>(1.5-7.8)</small></th>
+                <th>ALC<br><small>(0.9-3.9)</small></th>
+                <th>Notes</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr style="background: #eff6ff;">
+                <td><strong>01/09/2026</strong><br><span class="badge badge-latest">Week 3</span></td>
+                <td class="normal">9.0 <span class="trend up">↑</span></td>
+                <td class="normal">17.0 <span class="trend up">↑</span></td>
+                <td class="normal">241 <span class="trend up">↑</span></td>
+                <td class="normal">6.2 <span class="trend up">↑</span></td>
+                <td class="normal">2.0</td>
+                <td><span class="badge badge-normal">✅ All normal</span> + CMP done</td>
+            </tr>
+            <tr>
+                <td><strong>01/02/2026</strong><br>Week 2</td>
+                <td class="normal">7.2</td>
+                <td class="normal">15.3</td>
+                <td class="normal">203</td>
+                <td class="normal">4.1</td>
+                <td class="normal">2.3</td>
+                <td>✅ All normal</td>
+            </tr>
+            <tr>
+                <td><strong>12/26/2025</strong><br>Day 5</td>
+                <td class="normal">9.4</td>
+                <td class="normal">16.4</td>
+                <td class="normal">293</td>
+                <td class="normal">5.3</td>
+                <td class="normal">3.1</td>
+                <td>✅ Excellent initial response</td>
+            </tr>
+            <tr>
+                <td><strong>11/07/2025</strong><br>Baseline</td>
+                <td class="normal">7.8</td>
+                <td class="normal">14.2</td>
+                <td class="normal">245</td>
+                <td>—</td>
+                <td>—</td>
+                <td>Pre-treatment</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h2>🩺 Kidney & Metabolic Panel (Week 3)</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Parameter</th>
+                <th>Value</th>
+                <th>Reference</th>
+                <th>Status</th>
+                <th>Clinical Meaning</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Creatinine</strong></td>
+                <td>0.78 mg/dL</td>
+                <td>0.68-1.37</td>
+                <td class="normal">✅ Excellent</td>
+                <td>Kidney function great - no myeloma damage</td>
+            </tr>
+            <tr>
+                <td><strong>eGFR</strong></td>
+                <td>103 mL/min</td>
+                <td>≥60</td>
+                <td class="normal">✅ Excellent</td>
+                <td>Kidney filtering at optimal rate</td>
+            </tr>
+            <tr>
+                <td><strong>Calcium</strong></td>
+                <td>9.5 mg/dL</td>
+                <td>8.7-10.4</td>
+                <td class="normal">✅ Normal</td>
+                <td>No hypercalcemia from bone damage</td>
+            </tr>
+            <tr>
+                <td><strong>Sodium</strong></td>
+                <td>134 mmol/L</td>
+                <td>135-145</td>
+                <td class="low">⚠️ Low</td>
+                <td>Mild - increase fluid intake</td>
+            </tr>
+            <tr>
+                <td><strong>Chloride</strong></td>
+                <td>92 mmol/L</td>
+                <td>98-108</td>
+                <td class="low">⚠️ Low</td>
+                <td>Related to sodium - monitor</td>
+            </tr>
+            <tr>
+                <td><strong>Albumin</strong></td>
+                <td>4.3 g/dL</td>
+                <td>3.8-5.1</td>
+                <td class="normal">✅ Normal</td>
+                <td>Good nutrition status</td>
+            </tr>
+            <tr>
+                <td><strong>ALT (Liver)</strong></td>
+                <td>23 IU/L</td>
+                <td>5-60</td>
+                <td class="normal">✅ Normal</td>
+                <td>Liver tolerating treatment well</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h2>🎯 Disease Markers</h2>
+    <table>
+        <thead>
+            <tr><th>Date</th><th>Free Kappa<br><small>(0.33-1.94)</small></th><th>κ/λ Ratio<br><small>(0.26-1.65)</small></th><th>M-Spike</th><th>% Change</th></tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>11/07/2025</strong> Baseline</td>
+                <td class="high">655.69 mg/L</td>
+                <td class="high">52.41</td>
+                <td class="high">1.07 g/dL</td>
+                <td>—</td>
+            </tr>
+            <tr style="background: #fef3c7;">
+                <td colspan="5" style="text-align:center;">
+                    ⏳ <strong>Next disease marker check: Week 4 (January 18, 2026)</strong><br>
+                    <small>Target: ≥50% reduction in Free Kappa</small>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h2>📅 Upcoming Schedule</h2>
+    <table>
+        <tr><th>Date</th><th>Tests</th><th>Goal</th></tr>
+        <tr style="background: #fef3c7;">
+            <td><strong>Jan 18, 2026</strong> (Week 4)</td>
+            <td>Free Kappa, M-spike, CBC, CMP</td>
+            <td>≥50% FLC reduction 🎯</td>
+        </tr>
+        <tr>
+            <td><strong>April 2026</strong> (Week 12)</td>
+            <td>MRD Test, Bone Marrow Biopsy</td>
+            <td>MRD-negative at 10⁻⁵</td>
+        </tr>
+    </table>
+    
+    <hr>
+    <p style="font-size: 12px; color: #6b7280; text-align: center;">
+        Medical Site V2 | Last Updated: January 14, 2026 | 
+        <a href="index.html">← Back to Portal</a>
+    </p>
+</body>
+</html>
