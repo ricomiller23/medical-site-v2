@@ -212,7 +212,7 @@ window.closeSearch = closeSearch;
 // ============================================
 // INITIALIZATION
 // ============================================
-document.addEventListener('DOMContentLoaded', () => {
+function initialize() {
     // Initialize search
     window.siteSearch = new SiteSearch();
     createSearchModal();
@@ -229,7 +229,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     console.log('🔍 Interactive features loaded (Search: Cmd+K)');
-});
+}
+
+// Handle DOM ready - check if already loaded
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initialize);
+} else {
+    // DOM already loaded, run immediately
+    initialize();
+}
 
 // Add highlight animation
 const style = document.createElement('style');
