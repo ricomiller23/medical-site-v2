@@ -1,84 +1,489 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Appointment Questions - V2</title>
+    <title>Questions — Eric J. Miller</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; padding: 20px; max-width: 750px; margin: 0 auto; background: #f9fafb; }
-        h1, h2 { color: #1E3A8A; }
-        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px; }
-        .print-btn { background: linear-gradient(135deg, #1E3A8A, #3b82f6); color: white; padding: 12px 24px; border: none; border-radius: 10px; cursor: pointer; font-weight: 600; }
-        .checklist { list-style: none; padding: 0; }
-        .checklist li { padding: 14px; margin: 10px 0; background: white; border-radius: 10px; border-left: 4px solid #1E3A8A; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-        .checklist li::before { content: "☐ "; font-size: 1.3em; }
-        .section { margin: 30px 0; }
-        .values { background: linear-gradient(135deg, #d1fae5, #a7f3d0); padding: 20px; border-radius: 12px; margin: 20px 0; }
-        .note { background: #fef3c7; padding: 16px; border-radius: 10px; margin: 20px 0; border-left: 4px solid #f59e0b; }
-        @media print { .no-print { display: none; } body { background: white; } }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --black: #000;
+            --white: #FFF;
+            --gray: #666;
+            --light: #F5F5F5;
+            --accent: #10B981;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--white);
+            color: var(--black);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            right: 0;
+            padding: 40px 60px;
+            z-index: 1000;
+            display: flex;
+            gap: 40px;
+        }
+
+        nav a {
+            font-size: 14px;
+            color: var(--black);
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        nav a:hover {
+            opacity: 0.5;
+        }
+
+        .hero {
+            min-height: 50vh;
+            padding: 160px 60px 60px;
+        }
+
+        .display-huge {
+            font-size: clamp(48px, 10vw, 120px);
+            font-weight: 600;
+            letter-spacing: -0.04em;
+            line-height: 0.9;
+            text-transform: uppercase;
+        }
+
+        .display-medium {
+            font-size: clamp(28px, 4vw, 48px);
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            margin-bottom: 30px;
+        }
+
+        .eyebrow {
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+
+        section {
+            padding: 60px;
+        }
+
+        .section-dark {
+            background: var(--black);
+            color: var(--white);
+        }
+
+        .section-dark .eyebrow {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--gray);
+            text-decoration: none;
+            margin-bottom: 40px;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover {
+            color: var(--black);
+        }
+
+        .values-box {
+            background: var(--light);
+            padding: 40px;
+            margin: 40px 0;
+        }
+
+        .values-box h3 {
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .value-item {}
+
+        .value-item .label {
+            font-size: 14px;
+            color: var(--gray);
+            margin-bottom: 4px;
+        }
+
+        .value-item .number {
+            font-size: 24px;
+            font-weight: 500;
+        }
+
+        .value-item .status {
+            font-size: 12px;
+            color: var(--accent);
+            margin-top: 2px;
+        }
+
+        .question-section {
+            margin-bottom: 60px;
+        }
+
+        .question-section h2 {
+            font-size: 24px;
+            font-weight: 500;
+            margin-bottom: 30px;
+            letter-spacing: -0.02em;
+        }
+
+        .question-list {
+            list-style: none;
+        }
+
+        .question-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            padding: 24px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        .section-dark .question-item {
+            border-bottom-color: rgba(255, 255, 255, 0.08);
+        }
+
+        .checkbox {
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--black);
+            border-radius: 4px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .section-dark .checkbox {
+            border-color: var(--white);
+        }
+
+        .checkbox:hover {
+            background: var(--light);
+        }
+
+        .checkbox.checked {
+            background: var(--black);
+        }
+
+        .checkbox.checked::after {
+            content: '✓';
+            color: var(--white);
+            font-size: 14px;
+        }
+
+        .section-dark .checkbox.checked {
+            background: var(--white);
+        }
+
+        .section-dark .checkbox.checked::after {
+            color: var(--black);
+        }
+
+        .question-text {
+            font-size: 18px;
+            line-height: 1.5;
+        }
+
+        .note-box {
+            background: var(--light);
+            border-left: 4px solid var(--black);
+            padding: 30px;
+            margin: 40px 0;
+        }
+
+        .note-box p {
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        .note-box input {
+            margin-top: 16px;
+            padding: 12px 16px;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            font-size: 16px;
+            width: 200px;
+        }
+
+        .pill {
+            display: inline-block;
+            padding: 12px 24px;
+            border: 1px solid var(--black);
+            border-radius: 100px;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            color: var(--black);
+            transition: all 0.3s;
+            margin-right: 12px;
+            margin-top: 20px;
+            cursor: pointer;
+            background: transparent;
+        }
+
+        .pill:hover {
+            background: var(--black);
+            color: var(--white);
+        }
+
+        .section-dark .pill {
+            border-color: var(--white);
+            color: var(--white);
+        }
+
+        .section-dark .pill:hover {
+            background: var(--white);
+            color: var(--black);
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 24px;
+                gap: 24px;
+            }
+
+            .hero,
+            section {
+                padding: 60px 24px;
+            }
+
+            .question-text {
+                font-size: 16px;
+            }
+        }
+
+        @media print {
+
+            nav,
+            .pill,
+            .back-link {
+                display: none;
+            }
+
+            .hero {
+                min-height: auto;
+                padding: 40px;
+            }
+
+            section {
+                padding: 20px 40px;
+            }
+
+            .section-dark {
+                background: white;
+                color: black;
+            }
+
+            .checkbox {
+                border-color: black !important;
+            }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </head>
+
 <body>
-    <div class="header">
-        <h1>📋 Week 4 Appointment Questions</h1>
-        <button class="print-btn no-print" onclick="window.print()">🖨️ Print</button>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="documents.html">Documents</a>
+        <a href="lab-tracker.html">Labs</a>
+    </nav>
+
+    <div class="hero">
+        <a href="index.html" class="back-link">← Back to Portal</a>
+        <p class="eyebrow">Appointment Preparation</p>
+        <h1 class="display-huge reveal">QUESTIONS</h1>
     </div>
-    
-    <p><strong>Patient:</strong> Eric J. Miller | <strong>Appointment:</strong> Week 4 Labs (Jan 18, 2026)</p>
-    
-    <div class="values">
-        <h3 style="margin-top:0;">📊 Your Latest Values (Week 3 - 01/09/2026)</h3>
-        <p><strong>CBC:</strong> WBC 9.0 ↑ | Hgb 17.0 ↑ | Plt 241 ↑ | ANC 6.2 ↑</p>
-        <p><strong>Kidney:</strong> eGFR 103 (Excellent!) | Creatinine 0.78</p>
-        <p><strong>Note:</strong> Low Sodium (134) & Chloride (92) - discuss hydration</p>
-        <p><strong>Baseline Free Kappa:</strong> 655.69 mg/L → Target: ≤328 (50% reduction)</p>
-    </div>
-    
-    <div class="section">
-        <h2>❓ Questions About Week 4 Results</h2>
-        <ul class="checklist">
-            <li>What are my Free Kappa results? Did I achieve ≥50% reduction?</li>
-            <li>What does my M-spike show?</li>
-            <li>Is my response rate on track for the planned timeline?</li>
-            <li>Should we escalate to full D-RVd quadruplet now?</li>
-        </ul>
-    </div>
-    
-    <div class="section">
-        <h2>🧪 Questions About Electrolytes</h2>
-        <ul class="checklist">
-            <li>My sodium (134) and chloride (92) were low - is this concerning?</li>
-            <li>Should I take electrolyte supplements?</li>
-            <li>How much water should I drink daily?</li>
-        </ul>
-    </div>
-    
-    <div class="section">
-        <h2>💊 Questions About Treatment</h2>
-        <ul class="checklist">
-            <li>When will Lenalidomide and Bortezomib be added?</li>
-            <li>What side effects should I watch for with each new drug?</li>
-            <li>What is the neuropathy risk and how do we minimize it?</li>
-        </ul>
-    </div>
-    
-    <div class="section">
-        <h2>🎯 Long-term Questions</h2>
-        <ul class="checklist">
-            <li>When is my first MRD test scheduled?</li>
-            <li>Am I still a candidate for treatment holidays if MRD-negative?</li>
-            <li>Are there any clinical trials I should consider?</li>
-        </ul>
-    </div>
-    
-    <div class="note">
-        <strong>💡 Tip:</strong> Write your Free Kappa result here when you get it: _________ mg/L<br>
-        <small>Calculate: (Baseline 655.69 - New Value) / 655.69 × 100 = ___% reduction</small>
-    </div>
-    
-    <hr>
-    <p style="font-size: 12px; color: #6b7280; text-align: center;">
-        V2 | Updated: January 14, 2026 | <a href="index.html">← Back to Portal</a>
-    </p>
+
+    <section>
+        <div class="values-box reveal">
+            <h3>Your Latest Values — Week 3 (01/09/2026)</h3>
+            <div class="values-grid">
+                <div class="value-item">
+                    <div class="label">WBC</div>
+                    <div class="number">9.0</div>
+                    <div class="status">↑ Normal</div>
+                </div>
+                <div class="value-item">
+                    <div class="label">Hemoglobin</div>
+                    <div class="number">17.0</div>
+                    <div class="status">↑ Normal</div>
+                </div>
+                <div class="value-item">
+                    <div class="label">eGFR</div>
+                    <div class="number">103</div>
+                    <div class="status">Excellent</div>
+                </div>
+                <div class="value-item">
+                    <div class="label">Sodium</div>
+                    <div class="number" style="color: #F59E0B;">134</div>
+                    <div class="status" style="color: #F59E0B;">↓ Low</div>
+                </div>
+                <div class="value-item">
+                    <div class="label">Free Kappa (Baseline)</div>
+                    <div class="number">655.69</div>
+                    <div class="status">Target: ≤328</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-dark">
+        <div class="question-section reveal">
+            <p class="eyebrow">Week 4 Results</p>
+            <h2 class="display-medium">Questions About Labs</h2>
+            <ul class="question-list">
+                <li class="question-item">
+                    <div class="checkbox" onclick="this.classList.toggle('checked')"></div>
+                    <span class="question-text">What are my Free Kappa results? Did I achieve ≥50% reduction?</span>
+                </li>
+                <li class="question-item">
+                    <div class="checkbox" onclick="this.classList.toggle('checked')"></div>
+                    <span class="question-text">What does my M-spike show?</span>
+                </li>
+                <li class="question-item">
+                    <div class="checkbox" onclick="this.classList.toggle('checked')"></div>
+                    <span class="question-text">Is my response rate on track for the planned timeline?</span>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <section>
+        <div class="question-section reveal">
+            <p class="eyebrow">Electrolytes</p>
+            <h2 class="display-medium">About Low Sodium/Chloride</h2>
+            <ul class="question-list">
+                <li class="question-item">
+                    <div class="checkbox" onclick="this.classList.toggle('checked')"></div>
+                    <span class="question-text">My sodium (134) and chloride (92) were low — is this concerning?</span>
+                </li>
+                <li class="question-item">
+                    <div class="checkbox" onclick="this.classList.toggle('checked')"></div>
+                    <span class="question-text">Should I take electrolyte supplements?</span>
+                </li>
+                <li class="question-item">
+                    <div class="checkbox" onclick="this.classList.toggle('checked')"></div>
+                    <span class="question-text">How much water should I drink daily?</span>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="section-dark">
+        <div class="question-section reveal">
+            <p class="eyebrow">Treatment</p>
+            <h2 class="display-medium">Daratumumab Questions</h2>
+            <ul class="question-list">
+                <li class="question-item">
+                    <div class="checkbox" onclick="this.classList.toggle('checked')"></div>
+                    <span class="question-text">Is Daratumumab monotherapy sufficient for my case?</span>
+                </li>
+                <li class="question-item">
+                    <div class="checkbox" onclick="this.classList.toggle('checked')"></div>
+                    <span class="question-text">What side effects should I watch for?</span>
+                </li>
+                <li class="question-item">
+                    <div class="checkbox" onclick="this.classList.toggle('checked')"></div>
+                    <span class="question-text">When is my first MRD test scheduled?</span>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <section>
+        <div class="question-section reveal">
+            <p class="eyebrow">Long-term</p>
+            <h2 class="display-medium">Future Planning</h2>
+            <ul class="question-list">
+                <li class="question-item">
+                    <div class="checkbox" onclick="this.classList.toggle('checked')"></div>
+                    <span class="question-text">Am I still a candidate for treatment holidays if MRD-negative?</span>
+                </li>
+                <li class="question-item">
+                    <div class="checkbox" onclick="this.classList.toggle('checked')"></div>
+                    <span class="question-text">Are there any clinical trials I should consider?</span>
+                </li>
+                <li class="question-item">
+                    <div class="checkbox" onclick="this.classList.toggle('checked')"></div>
+                    <span class="question-text">What are the long-term maintenance options?</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="note-box reveal">
+            <p>Write your Free Kappa result here when you get it:</p>
+            <input type="text" placeholder="_______ mg/L">
+            <p style="margin-top: 16px; font-size: 14px; color: var(--gray);">
+                Calculate: (655.69 - New Value) / 655.69 × 100 = ___% reduction
+            </p>
+        </div>
+
+        <div class="reveal">
+            <button onclick="window.print()" class="pill">Print This Page</button>
+            <a href="index.html" class="pill">Back to Portal →</a>
+        </div>
+    </section>
+
+    <section class="section-dark" style="min-height: auto; padding: 40px 60px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+            <p style="font-size: 14px; color: rgba(255,255,255,0.5);">Eric J. Miller — Question Checklist</p>
+            <p style="font-size: 14px; color: rgba(255,255,255,0.5);">Updated: January 14, 2026</p>
+        </div>
+    </section>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
 </body>
+
 </html>

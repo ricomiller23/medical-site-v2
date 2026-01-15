@@ -185,8 +185,8 @@ function createLabEntryModal() {
     modal.id = 'lab-entry-modal';
     modal.className = 'fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4';
     modal.innerHTML = `
-        <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <div class="bg-gradient-to-r from-blue-900 to-blue-700 text-white p-6 rounded-t-2xl">
+        <div style="background: #fff; max-width: 700px; width: 100%; max-height: 90vh; overflow-y: auto;">
+            <div style="background: #000; color: #fff; padding: 40px;">
                 <div class="flex justify-between items-center">
                     <h2 class="text-2xl font-bold">➕ Add New Lab Results</h2>
                     <button onclick="closeLabModal()" class="text-white hover:text-gray-200 text-3xl">&times;</button>
@@ -383,10 +383,10 @@ document.addEventListener('DOMContentLoaded', function () {
     // Add floating action button
     const fab = document.createElement('button');
     fab.id = 'add-lab-fab';
-    fab.className = 'fixed bottom-6 right-6 bg-gradient-to-r from-green-600 to-green-700 text-white p-4 rounded-full shadow-2xl hover:shadow-3xl transform hover:scale-110 transition-all z-40';
-    fab.innerHTML = '<span class="text-2xl">➕</span><span class="ml-2 font-bold">Add Labs</span>';
+    fab.className = '';
+    fab.innerHTML = '<span style="font-size: 18px;">+</span><span>Add Labs</span>';
     fab.onclick = openLabModal;
-    fab.style.cssText = 'display: flex; align-items: center; gap: 8px; padding: 16px 24px; border-radius: 50px;';
+    fab.style.cssText = 'display: flex; align-items: center; gap: 10px; padding: 16px 32px; border-radius: 100px; background: #000; color: #fff; border: none; cursor: pointer; font-family: Inter, sans-serif; font-size: 14px; font-weight: 500; box-shadow: 0 20px 60px rgba(0,0,0,0.3); transition: transform 0.3s;';
     document.body.appendChild(fab);
 });
 
