@@ -219,6 +219,82 @@ class MedicalCharts {
         });
     }
 
+    // Create Quality of Life Chart
+    createQoLChart(canvasId) {
+        const ctx = document.getElementById(canvasId);
+        if (!ctx) return;
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Now', 'Yr 1', 'Yr 2', 'Yr 3', 'Yr 5', 'Yr 7', 'Yr 10', 'Yr 15', 'Yr 20'],
+                datasets: [
+                    {
+                        label: 'MRD-Negative (Best)',
+                        data: [100, 60, 55, 70, 80, 85, 85, 80, 75],
+                        borderColor: '#10B981',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    },
+                    {
+                        label: 'MRD-Positive (Middle)',
+                        data: [100, 55, 50, 60, 65, 60, 55, 40, null],
+                        borderColor: '#F59E0B',
+                        backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    },
+                    {
+                        label: 'Refractory (Worst)',
+                        data: [100, 50, 45, 40, 35, 25, null, null, null],
+                        borderColor: '#EF4444',
+                        backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }
+                ]
+            },
+            options: {
+                ...this.chartDefaults,
+                scales: {
+                    x: {
+                        grid: { color: 'rgba(255,255,255,0.1)' },
+                        ticks: { color: 'rgba(255,255,255,0.7)' }
+                    },
+                    y: {
+                        min: 0,
+                        max: 100,
+                        grid: { color: 'rgba(255,255,255,0.1)' },
+                        ticks: {
+                            color: 'rgba(255,255,255,0.7)',
+                            callback: value => value + '%'
+                        }
+                    }
+                },
+                plugins: {
+                    ...this.chartDefaults.plugins,
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            color: 'rgba(255,255,255,0.8)',
+                            font: { family: 'Inter', size: 12 },
+                            padding: 20,
+                            usePointStyle: true
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Quality of Life Over Time (%)',
+                        color: '#fff',
+                        font: { family: 'Inter', size: 16, weight: 500 },
+                        padding: { bottom: 20 }
+                    }
+                }
+            }
+        });
+    }
+
     // Generate Status Summary
     getStatusSummary() {
         const latest = {
@@ -253,6 +329,7 @@ class MedicalCharts {
         this.createCBCChart('cbc-chart');
         this.createDiseaseMarkersChart('disease-chart');
         this.createKidneyChart('kidney-chart');
+        this.createQoLChart('qol-chart');
 
         console.log('📊 Medical charts initialized');
     }
