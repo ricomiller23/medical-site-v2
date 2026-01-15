@@ -422,6 +422,7 @@
         <a href="#diagnosis">Diagnosis</a>
         <a href="#treatment">Treatment</a>
         <a href="#labs">Labs</a>
+        <a href="#trends">Trends</a>
         <a href="documents.html">Documents</a>
     </nav>
 
@@ -439,7 +440,157 @@
         </div>
     </section>
 
-    <!-- STATS -->
+    <!-- DASHBOARD CARDS -->
+    <section>
+        <p class="eyebrow reveal">Current Status</p>
+        <h2 class="display-medium reveal" style="margin: 40px 0 60px;">Dashboard</h2>
+
+        <div class="grid-4 reveal" style="gap: 24px;">
+            <div style="background: #F0FDF4; border: 1px solid #BBF7D0; padding: 32px; border-radius: 12px;">
+                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 16px;">
+                    <span style="font-size: 32px;">✅</span>
+                    <span
+                        style="font-size: 12px; background: #10B981; color: white; padding: 4px 12px; border-radius: 100px;">NORMAL</span>
+                </div>
+                <div style="font-size: 36px; font-weight: 600; margin-bottom: 4px;">9.0</div>
+                <div style="font-size: 14px; color: #166534;">WBC — ↑25% from Week 2</div>
+            </div>
+            <div style="background: #F0FDF4; border: 1px solid #BBF7D0; padding: 32px; border-radius: 12px;">
+                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 16px;">
+                    <span style="font-size: 32px;">✅</span>
+                    <span
+                        style="font-size: 12px; background: #10B981; color: white; padding: 4px 12px; border-radius: 100px;">EXCELLENT</span>
+                </div>
+                <div style="font-size: 36px; font-weight: 600; margin-bottom: 4px;">103</div>
+                <div style="font-size: 14px; color: #166534;">eGFR — Kidney Function</div>
+            </div>
+            <div style="background: #FFFBEB; border: 1px solid #FDE68A; padding: 32px; border-radius: 12px;">
+                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 16px;">
+                    <span style="font-size: 32px;">⚠️</span>
+                    <span
+                        style="font-size: 12px; background: #F59E0B; color: white; padding: 4px 12px; border-radius: 100px;">LOW</span>
+                </div>
+                <div style="font-size: 36px; font-weight: 600; margin-bottom: 4px;">134</div>
+                <div style="font-size: 14px; color: #92400E;">Sodium — Stay Hydrated</div>
+            </div>
+            <div style="background: #FEF2F2; border: 1px solid #FECACA; padding: 32px; border-radius: 12px;">
+                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 16px;">
+                    <span style="font-size: 32px;">🎯</span>
+                    <span
+                        style="font-size: 12px; background: #EF4444; color: white; padding: 4px 12px; border-radius: 100px;">PENDING</span>
+                </div>
+                <div style="font-size: 36px; font-weight: 600; margin-bottom: 4px;">655</div>
+                <div style="font-size: 14px; color: #991B1B;">Free Kappa — Target ≤328</div>
+            </div>
+        </div>
+
+        <div style="display: flex; gap: 16px; margin-top: 40px;" class="reveal">
+            <button onclick="openSymptomModal()" class="pill">📝 Log Symptoms</button>
+            <a href="lab-tracker.html" class="pill">📊 All Labs →</a>
+        </div>
+    </section>
+
+    <!-- PROGRESS TRENDS -->
+    <section class="section-dark">
+        <p class="eyebrow reveal">Trend Analysis</p>
+        <h2 class="display-medium reveal" style="margin: 40px 0 60px;">Progress Trends</h2>
+
+        <div class="grid-2 reveal" style="gap: 40px;">
+            <div style="background: rgba(255,255,255,0.05); padding: 40px; border-radius: 12px;">
+                <h3 style="font-size: 18px; margin-bottom: 24px; font-weight: 500;">CBC Over Time</h3>
+                <div style="height: 280px;">
+                    <canvas id="cbc-chart"></canvas>
+                </div>
+            </div>
+            <div style="background: rgba(255,255,255,0.05); padding: 40px; border-radius: 12px;">
+                <h3 style="font-size: 18px; margin-bottom: 24px; font-weight: 500;">Free Kappa Trajectory</h3>
+                <div style="height: 280px;">
+                    <canvas id="disease-chart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div style="background: rgba(255,255,255,0.05); padding: 40px; margin-top: 40px; border-radius: 12px;"
+            class="reveal">
+            <h3 style="font-size: 18px; margin-bottom: 16px; font-weight: 500;">📊 Analysis Summary</h3>
+            <p style="color: rgba(255,255,255,0.7); line-height: 1.8;">
+                <strong style="color: #10B981;">✓ CBC Stable:</strong> All blood counts trending within normal range.
+                WBC recovered well (+25%).<br>
+                <strong style="color: #10B981;">✓ Kidney Function:</strong> eGFR of 103 indicates excellent kidney
+                health — no Daratumumab impact.<br>
+                <strong style="color: #F59E0B;">⚠ Electrolytes:</strong> Sodium (134) and Chloride (92) slightly low —
+                increase fluid intake.<br>
+                <strong style="color: #3B82F6;">→ Next Milestone:</strong> Week 4 labs will include disease markers to
+                assess treatment response.
+            </p>
+        </div>
+    </section>
+
+    <!-- FUTURE MILESTONES -->
+    <section>
+        <p class="eyebrow reveal">Looking Ahead</p>
+        <h2 class="display-medium reveal" style="margin: 40px 0 60px;">Future Milestones</h2>
+
+        <div id="future-milestones" class="reveal"></div>
+
+        <div style="background: #F5F5F5; padding: 40px; margin-top: 40px; border-radius: 12px;" class="reveal">
+            <h3 style="font-size: 18px; margin-bottom: 16px; font-weight: 500;">🎯 Key Decision Points</h3>
+            <p style="color: #666; line-height: 1.8;">
+                <strong>Week 4 (Jan 18):</strong> First disease marker check — target ≥50% reduction in Free Kappa<br>
+                <strong>Month 3:</strong> Major response assessment — consider combo therapy if insufficient
+                response<br>
+                <strong>Month 4:</strong> First MRD (Minimal Residual Disease) test via bone marrow biopsy
+            </p>
+        </div>
+    </section>
+
+    <!-- WHAT TO EXPECT -->
+    <section class="section-dark">
+        <p class="eyebrow reveal">Treatment Guide</p>
+        <h2 class="display-medium reveal" style="margin: 40px 0 60px;">What to Expect</h2>
+
+        <div class="grid-3 reveal" style="gap: 32px;">
+            <div style="background: rgba(255,255,255,0.05); padding: 40px; border-radius: 12px;">
+                <div style="font-size: 32px; margin-bottom: 20px;">💉</div>
+                <h3 style="font-size: 20px; margin-bottom: 16px; font-weight: 500;">Infusion Day</h3>
+                <ul style="color: rgba(255,255,255,0.7); line-height: 1.8; list-style: none;">
+                    <li>• Pre-medications given first</li>
+                    <li>• First infusion: 6-8 hours</li>
+                    <li>• Subsequent: 3-4 hours</li>
+                    <li>• Watch for reactions (rare)</li>
+                </ul>
+            </div>
+            <div style="background: rgba(255,255,255,0.05); padding: 40px; border-radius: 12px;">
+                <div style="font-size: 32px; margin-bottom: 20px;">⚡</div>
+                <h3 style="font-size: 20px; margin-bottom: 16px; font-weight: 500;">Possible Side Effects</h3>
+                <ul style="color: rgba(255,255,255,0.7); line-height: 1.8; list-style: none;">
+                    <li>• Fatigue (common, mild)</li>
+                    <li>• Upper respiratory symptoms</li>
+                    <li>• Back pain during infusion</li>
+                    <li>• Low blood counts (monitor)</li>
+                </ul>
+            </div>
+            <div style="background: rgba(255,255,255,0.05); padding: 40px; border-radius: 12px;">
+                <div style="font-size: 32px; margin-bottom: 20px;">📈</div>
+                <h3 style="font-size: 20px; margin-bottom: 16px; font-weight: 500;">Expected Response</h3>
+                <ul style="color: rgba(255,255,255,0.7); line-height: 1.8; list-style: none;">
+                    <li>• 50%+ Free Kappa reduction by Week 8</li>
+                    <li>• M-Spike decline over 3-6 months</li>
+                    <li>• MRD-negative possible by Month 6</li>
+                    <li>• Durable responses common</li>
+                </ul>
+            </div>
+        </div>
+
+        <div style="margin-top: 60px;" class="reveal">
+            <a href="https://themmrf.org" target="_blank" class="pill" style="border-color: white; color: white;">MMRF
+                Resources →</a>
+            <a href="https://clinicaltrials.gov/search?cond=Smoldering%20Multiple%20Myeloma" target="_blank"
+                class="pill" style="border-color: white; color: white; margin-left: 12px;">Clinical Trials →</a>
+        </div>
+    </section>
+
+    <!-- GENETIC RISK -->
     <section>
         <div class="grid-4 reveal">
             <div class="stat">
@@ -451,12 +602,12 @@
                 <div class="stat-label">Abnormal (3 copies) — High Risk</div>
             </div>
             <div class="stat">
-                <div class="stat-value status-normal">9.0</div>
-                <div class="stat-label">WBC — Week 3 ✓</div>
+                <div class="stat-value status-normal">17.0</div>
+                <div class="stat-label">Hemoglobin — Week 3 ✓</div>
             </div>
             <div class="stat">
-                <div class="stat-value status-normal">103</div>
-                <div class="stat-label">eGFR — Kidney Function Excellent</div>
+                <div class="stat-value status-normal">241</div>
+                <div class="stat-label">Platelets — Normal Range</div>
             </div>
         </div>
     </section>
@@ -699,8 +850,11 @@
     </button>
 
     <!-- SCRIPTS -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="js/animations.js"></script>
     <script src="js/lab-entry.js"></script>
+    <script src="js/charts.js"></script>
+    <script src="js/symptom-log.js"></script>
     <script>
         // Reveal animations
         const observer = new IntersectionObserver((entries) => {
