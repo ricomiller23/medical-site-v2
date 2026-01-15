@@ -190,15 +190,24 @@ function createSearchModal() {
 
 function openSearch() {
     const modal = document.getElementById('search-modal');
-    modal.style.display = 'flex';
-    document.getElementById('search-input').focus();
-    document.getElementById('search-input').value = '';
-    document.getElementById('search-results').innerHTML = '';
+    if (modal) {
+        modal.style.display = 'flex';
+        document.getElementById('search-input').focus();
+        document.getElementById('search-input').value = '';
+        document.getElementById('search-results').innerHTML = '';
+    }
 }
 
 function closeSearch() {
-    document.getElementById('search-modal').style.display = 'none';
+    const modal = document.getElementById('search-modal');
+    if (modal) {
+        modal.style.display = 'none';
+    }
 }
+
+// Make functions globally available
+window.openSearch = openSearch;
+window.closeSearch = closeSearch;
 
 // ============================================
 // INITIALIZATION
