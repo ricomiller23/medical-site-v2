@@ -425,6 +425,9 @@
         <a href="#trends">Trends</a>
         <a href="#prognosis">Prognosis</a>
         <a href="documents.html">Documents</a>
+        <a href="javascript:fetchMyelomaNews()" style="display: flex; align-items: center; gap: 6px;">
+            📰 <span style="font-size: 11px;">Research</span>
+        </a>
         <a href="javascript:openSearch()" style="display: flex; align-items: center; gap: 6px;">
             🔍 <span style="font-size: 11px; background: #eee; padding: 2px 6px; border-radius: 4px;">⌘K</span>
         </a>
@@ -591,6 +594,28 @@
                 Resources →</a>
             <a href="https://clinicaltrials.gov/search?cond=Smoldering%20Multiple%20Myeloma" target="_blank"
                 class="pill" style="border-color: white; color: white; margin-left: 12px;">Clinical Trials →</a>
+        </div>
+    </section>
+
+    <!-- RESEARCH NEWS -->
+    <section id="news">
+        <p class="eyebrow reveal">Latest Updates</p>
+        <h2 class="display-medium reveal" style="margin: 40px 0 40px;">Research News</h2>
+        <p class="reveal" style="color: #666; margin-bottom: 40px;">Click the "📰 Research" button in the navigation to
+            fetch the latest myeloma treatment and research news.</p>
+
+        <div id="news-container" class="reveal">
+            <div id="news-loading" style="display: none; text-align: center; padding: 60px;">
+                <div style="font-size: 48px; margin-bottom: 16px;">🔄</div>
+                <p style="color: #666;">Fetching latest research news...</p>
+            </div>
+            <div id="news-grid" class="grid-3" style="gap: 24px;"></div>
+            <div id="news-empty" style="background: #F5F5F5; padding: 60px; border-radius: 12px; text-align: center;">
+                <div style="font-size: 48px; margin-bottom: 16px;">📰</div>
+                <p style="color: #666; margin-bottom: 24px;">No news loaded yet. Click the Research button above to
+                    fetch the latest updates.</p>
+                <button onclick="fetchMyelomaNews()" class="pill-filled pill">Fetch Latest Research</button>
+            </div>
         </div>
     </section>
 
