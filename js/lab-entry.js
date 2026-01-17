@@ -34,7 +34,8 @@ class LabTracker {
             { date: '2025-11-07', week: 'Baseline', wbc: 7.8, hemoglobin: 14.2, platelets: 245, freeKappa: 655.69, mSpike: 1.07 },
             { date: '2025-12-26', week: 'Day 5', wbc: 9.4, hemoglobin: 16.4, platelets: 293, anc: 5.3, alc: 3.1 },
             { date: '2026-01-02', week: 'Week 2', wbc: 7.2, hemoglobin: 15.3, platelets: 203, anc: 4.1, alc: 2.3 },
-            { date: '2026-01-09', week: 'Week 3', wbc: 9.0, hemoglobin: 17.0, platelets: 241, anc: 6.2, alc: 2.0, creatinine: 0.78, egfr: 103, sodium: 134, calcium: 9.5 }
+            { date: '2026-01-09', week: 'Week 3', wbc: 9.0, hemoglobin: 17.0, platelets: 241, anc: 6.2, alc: 2.0, creatinine: 0.78, egfr: 103, sodium: 134, calcium: 9.5 },
+            { date: '2026-01-16', week: 'Week 4', wbc: 7.2, hemoglobin: 15.8, platelets: 254, anc: 4.1, alc: 2.3, creatinine: 0.76, egfr: 104, sodium: 134, calcium: 9.2, glucose: 103 }
         ];
     }
 
@@ -183,102 +184,102 @@ window.labTracker = new LabTracker();
 function createLabEntryModal() {
     const modal = document.createElement('div');
     modal.id = 'lab-entry-modal';
-    modal.className = 'fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4';
+    modal.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: none; z-index: 9999; align-items: center; justify-content: center; padding: 16px;';
     modal.innerHTML = `
-        <div style="background: #fff; max-width: 700px; width: 100%; max-height: 90vh; overflow-y: auto;">
-            <div style="background: #000; color: #fff; padding: 40px;">
-                <div class="flex justify-between items-center">
-                    <h2 class="text-2xl font-bold">➕ Add New Lab Results</h2>
-                    <button onclick="closeLabModal()" class="text-white hover:text-gray-200 text-3xl">&times;</button>
+        <div style="background: #fff; max-width: 700px; width: 100%; max-height: 90vh; overflow-y: auto; border-radius: 16px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);">
+            <div style="background: #000; color: #fff; padding: 32px; border-radius: 16px 16px 0 0;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h2 style="font-size: 24px; font-weight: 700; margin: 0;">➕ Add New Lab Results</h2>
+                    <button onclick="closeLabModal()" style="background: none; border: none; color: #fff; font-size: 28px; cursor: pointer; padding: 0; line-height: 1;">&times;</button>
                 </div>
-                <p class="text-blue-200 mt-1">Enter your latest values and get instant analysis</p>
+                <p style="color: #93C5FD; margin-top: 8px; font-size: 14px;">Enter your latest values and get instant analysis</p>
             </div>
             
-            <form id="lab-entry-form" class="p-6 space-y-6">
-                <div class="grid grid-cols-2 gap-4">
+            <form id="lab-entry-form" style="padding: 24px;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px;">
                     <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-1">Date</label>
-                        <input type="date" name="date" required class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        <label style="display: block; font-size: 14px; font-weight: 600; color: #374151; margin-bottom: 6px;">Date</label>
+                        <input type="date" name="date" required style="width: 100%; border: 1px solid #D1D5DB; border-radius: 8px; padding: 10px 14px; font-size: 14px; box-sizing: border-box;">
                     </div>
                     <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-1">Week Label</label>
-                        <input type="text" name="week" placeholder="e.g., Week 4" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500">
+                        <label style="display: block; font-size: 14px; font-weight: 600; color: #374151; margin-bottom: 6px;">Week Label</label>
+                        <input type="text" name="week" placeholder="e.g., Week 5" style="width: 100%; border: 1px solid #D1D5DB; border-radius: 8px; padding: 10px 14px; font-size: 14px; box-sizing: border-box;">
                     </div>
                 </div>
                 
-                <div class="border-t pt-4">
-                    <h3 class="font-bold text-lg text-gray-800 mb-3">🩸 Complete Blood Count (CBC)</h3>
-                    <div class="grid grid-cols-3 gap-4">
+                <div style="border-top: 1px solid #E5E7EB; padding-top: 20px; margin-bottom: 24px;">
+                    <h3 style="font-weight: 700; font-size: 16px; color: #1F2937; margin-bottom: 16px;">🩸 Complete Blood Count (CBC)</h3>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
                         <div>
-                            <label class="block text-sm text-gray-600 mb-1">WBC <span class="text-gray-400">(4.0-11.0)</span></label>
-                            <input type="number" step="0.1" name="wbc" placeholder="K/μL" class="w-full border rounded-lg px-3 py-2">
+                            <label style="display: block; font-size: 13px; color: #6B7280; margin-bottom: 4px;">WBC <span style="color: #9CA3AF;">(4.0-11.0)</span></label>
+                            <input type="number" step="0.1" name="wbc" placeholder="K/μL" style="width: 100%; border: 1px solid #D1D5DB; border-radius: 8px; padding: 8px 12px; font-size: 14px; box-sizing: border-box;">
                         </div>
                         <div>
-                            <label class="block text-sm text-gray-600 mb-1">Hemoglobin <span class="text-gray-400">(13.5-17.0)</span></label>
-                            <input type="number" step="0.1" name="hemoglobin" placeholder="g/dL" class="w-full border rounded-lg px-3 py-2">
+                            <label style="display: block; font-size: 13px; color: #6B7280; margin-bottom: 4px;">Hemoglobin <span style="color: #9CA3AF;">(13.5-17.0)</span></label>
+                            <input type="number" step="0.1" name="hemoglobin" placeholder="g/dL" style="width: 100%; border: 1px solid #D1D5DB; border-radius: 8px; padding: 8px 12px; font-size: 14px; box-sizing: border-box;">
                         </div>
                         <div>
-                            <label class="block text-sm text-gray-600 mb-1">Platelets <span class="text-gray-400">(130-450)</span></label>
-                            <input type="number" step="1" name="platelets" placeholder="K/μL" class="w-full border rounded-lg px-3 py-2">
+                            <label style="display: block; font-size: 13px; color: #6B7280; margin-bottom: 4px;">Platelets <span style="color: #9CA3AF;">(130-450)</span></label>
+                            <input type="number" step="1" name="platelets" placeholder="K/μL" style="width: 100%; border: 1px solid #D1D5DB; border-radius: 8px; padding: 8px 12px; font-size: 14px; box-sizing: border-box;">
                         </div>
                         <div>
-                            <label class="block text-sm text-gray-600 mb-1">ANC <span class="text-gray-400">(1.5-7.8)</span></label>
-                            <input type="number" step="0.1" name="anc" placeholder="K/μL" class="w-full border rounded-lg px-3 py-2">
+                            <label style="display: block; font-size: 13px; color: #6B7280; margin-bottom: 4px;">ANC <span style="color: #9CA3AF;">(1.5-7.8)</span></label>
+                            <input type="number" step="0.1" name="anc" placeholder="K/μL" style="width: 100%; border: 1px solid #D1D5DB; border-radius: 8px; padding: 8px 12px; font-size: 14px; box-sizing: border-box;">
                         </div>
                         <div>
-                            <label class="block text-sm text-gray-600 mb-1">ALC <span class="text-gray-400">(0.9-3.9)</span></label>
-                            <input type="number" step="0.1" name="alc" placeholder="K/μL" class="w-full border rounded-lg px-3 py-2">
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="border-t pt-4">
-                    <h3 class="font-bold text-lg text-gray-800 mb-3">🧪 Metabolic Panel (Optional)</h3>
-                    <div class="grid grid-cols-3 gap-4">
-                        <div>
-                            <label class="block text-sm text-gray-600 mb-1">Creatinine <span class="text-gray-400">(0.68-1.37)</span></label>
-                            <input type="number" step="0.01" name="creatinine" placeholder="mg/dL" class="w-full border rounded-lg px-3 py-2">
-                        </div>
-                        <div>
-                            <label class="block text-sm text-gray-600 mb-1">eGFR <span class="text-gray-400">(≥60)</span></label>
-                            <input type="number" step="1" name="egfr" placeholder="mL/min" class="w-full border rounded-lg px-3 py-2">
-                        </div>
-                        <div>
-                            <label class="block text-sm text-gray-600 mb-1">Sodium <span class="text-gray-400">(135-145)</span></label>
-                            <input type="number" step="1" name="sodium" placeholder="mmol/L" class="w-full border rounded-lg px-3 py-2">
-                        </div>
-                        <div>
-                            <label class="block text-sm text-gray-600 mb-1">Calcium <span class="text-gray-400">(8.7-10.4)</span></label>
-                            <input type="number" step="0.1" name="calcium" placeholder="mg/dL" class="w-full border rounded-lg px-3 py-2">
+                            <label style="display: block; font-size: 13px; color: #6B7280; margin-bottom: 4px;">ALC <span style="color: #9CA3AF;">(0.9-3.9)</span></label>
+                            <input type="number" step="0.1" name="alc" placeholder="K/μL" style="width: 100%; border: 1px solid #D1D5DB; border-radius: 8px; padding: 8px 12px; font-size: 14px; box-sizing: border-box;">
                         </div>
                     </div>
                 </div>
                 
-                <div class="border-t pt-4">
-                    <h3 class="font-bold text-lg text-gray-800 mb-3">🎯 Disease Markers (If Available)</h3>
-                    <div class="grid grid-cols-2 gap-4">
+                <div style="border-top: 1px solid #E5E7EB; padding-top: 20px; margin-bottom: 24px;">
+                    <h3 style="font-weight: 700; font-size: 16px; color: #1F2937; margin-bottom: 16px;">🧪 Metabolic Panel (Optional)</h3>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
                         <div>
-                            <label class="block text-sm text-gray-600 mb-1">Free Kappa <span class="text-gray-400">(0.33-1.94 normal)</span></label>
-                            <input type="number" step="0.01" name="freeKappa" placeholder="mg/L" class="w-full border rounded-lg px-3 py-2">
+                            <label style="display: block; font-size: 13px; color: #6B7280; margin-bottom: 4px;">Creatinine <span style="color: #9CA3AF;">(0.68-1.37)</span></label>
+                            <input type="number" step="0.01" name="creatinine" placeholder="mg/dL" style="width: 100%; border: 1px solid #D1D5DB; border-radius: 8px; padding: 8px 12px; font-size: 14px; box-sizing: border-box;">
                         </div>
                         <div>
-                            <label class="block text-sm text-gray-600 mb-1">M-Spike <span class="text-gray-400">(0 normal)</span></label>
-                            <input type="number" step="0.01" name="mSpike" placeholder="g/dL" class="w-full border rounded-lg px-3 py-2">
+                            <label style="display: block; font-size: 13px; color: #6B7280; margin-bottom: 4px;">eGFR <span style="color: #9CA3AF;">(≥60)</span></label>
+                            <input type="number" step="1" name="egfr" placeholder="mL/min" style="width: 100%; border: 1px solid #D1D5DB; border-radius: 8px; padding: 8px 12px; font-size: 14px; box-sizing: border-box;">
+                        </div>
+                        <div>
+                            <label style="display: block; font-size: 13px; color: #6B7280; margin-bottom: 4px;">Sodium <span style="color: #9CA3AF;">(135-145)</span></label>
+                            <input type="number" step="1" name="sodium" placeholder="mmol/L" style="width: 100%; border: 1px solid #D1D5DB; border-radius: 8px; padding: 8px 12px; font-size: 14px; box-sizing: border-box;">
+                        </div>
+                        <div>
+                            <label style="display: block; font-size: 13px; color: #6B7280; margin-bottom: 4px;">Calcium <span style="color: #9CA3AF;">(8.7-10.4)</span></label>
+                            <input type="number" step="0.1" name="calcium" placeholder="mg/dL" style="width: 100%; border: 1px solid #D1D5DB; border-radius: 8px; padding: 8px 12px; font-size: 14px; box-sizing: border-box;">
                         </div>
                     </div>
                 </div>
                 
-                <div class="flex gap-3 pt-4">
-                    <button type="submit" class="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold py-3 px-6 rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all transform hover:-translate-y-1 shadow-lg">
+                <div style="border-top: 1px solid #E5E7EB; padding-top: 20px; margin-bottom: 24px;">
+                    <h3 style="font-weight: 700; font-size: 16px; color: #1F2937; margin-bottom: 16px;">🎯 Disease Markers (If Available)</h3>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                        <div>
+                            <label style="display: block; font-size: 13px; color: #6B7280; margin-bottom: 4px;">Free Kappa <span style="color: #9CA3AF;">(0.33-1.94 normal)</span></label>
+                            <input type="number" step="0.01" name="freeKappa" placeholder="mg/L" style="width: 100%; border: 1px solid #D1D5DB; border-radius: 8px; padding: 8px 12px; font-size: 14px; box-sizing: border-box;">
+                        </div>
+                        <div>
+                            <label style="display: block; font-size: 13px; color: #6B7280; margin-bottom: 4px;">M-Spike <span style="color: #9CA3AF;">(0 normal)</span></label>
+                            <input type="number" step="0.01" name="mSpike" placeholder="g/dL" style="width: 100%; border: 1px solid #D1D5DB; border-radius: 8px; padding: 8px 12px; font-size: 14px; box-sizing: border-box;">
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="display: flex; gap: 12px; padding-top: 16px;">
+                    <button type="submit" style="flex: 1; background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%); color: white; font-weight: 700; padding: 14px 24px; border-radius: 12px; border: none; cursor: pointer; font-size: 15px; box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);">
                         📊 Analyze & Save
                     </button>
-                    <button type="button" onclick="closeLabModal()" class="px-6 py-3 border border-gray-300 rounded-xl hover:bg-gray-50">
+                    <button type="button" onclick="closeLabModal()" style="padding: 14px 24px; border: 1px solid #D1D5DB; border-radius: 12px; background: #fff; cursor: pointer; font-size: 15px;">
                         Cancel
                     </button>
                 </div>
             </form>
             
-            <div id="analysis-result" class="hidden p-6 border-t bg-gray-50 rounded-b-2xl"></div>
+            <div id="analysis-result" style="display: none; padding: 24px; border-top: 1px solid #E5E7EB; background: #F9FAFB; border-radius: 0 0 16px 16px;"></div>
         </div>
     `;
     document.body.appendChild(modal);
@@ -317,62 +318,67 @@ function createLabEntryModal() {
 }
 
 function openLabModal() {
-    const modal = document.getElementById('lab-entry-modal');
-    if (!modal) createLabEntryModal();
-    document.getElementById('lab-entry-modal').classList.remove('hidden');
-    document.getElementById('analysis-result').classList.add('hidden');
+    let modal = document.getElementById('lab-entry-modal');
+    if (!modal) {
+        createLabEntryModal();
+        modal = document.getElementById('lab-entry-modal');
+    }
+    modal.style.display = 'flex';
+    document.getElementById('analysis-result').style.display = 'none';
     document.getElementById('lab-entry-form').reset();
     // Set default date to today
-    document.querySelector('input[name="date"]').valueAsDate = new Date();
+    const dateInput = document.querySelector('input[name="date"]');
+    if (dateInput) dateInput.valueAsDate = new Date();
 }
 
 function closeLabModal() {
-    document.getElementById('lab-entry-modal').classList.add('hidden');
+    const modal = document.getElementById('lab-entry-modal');
+    if (modal) modal.style.display = 'none';
 }
 
 function showAnalysisResult(analysis) {
     const resultDiv = document.getElementById('analysis-result');
-    resultDiv.classList.remove('hidden');
+    resultDiv.style.display = 'block';
 
     let html = `
-        <h3 class="text-xl font-bold text-gray-800 mb-4">📋 Analysis Results - ${analysis.week}</h3>
+        <h3 style="font-size: 20px; font-weight: 700; color: #1F2937; margin-bottom: 16px;">📋 Analysis Results - ${analysis.week}</h3>
         
-        <div class="space-y-4">
-            ${analysis.summary.map(s => `<div class="bg-blue-50 border-l-4 border-blue-500 p-3 rounded">${s}</div>`).join('')}
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+            ${analysis.summary.map(s => `<div style="background: #EFF6FF; border-left: 4px solid #3B82F6; padding: 12px; border-radius: 4px;">${s}</div>`).join('')}
             
             ${analysis.positives.length > 0 ? `
-                <div class="bg-green-50 border border-green-200 rounded-lg p-4">
-                    <h4 class="font-bold text-green-800 mb-2">✅ Positive Findings</h4>
-                    <ul class="space-y-1 text-green-700">
-                        ${analysis.positives.map(p => `<li>• ${p}</li>`).join('')}
+                <div style="background: #F0FDF4; border: 1px solid #BBF7D0; border-radius: 8px; padding: 16px;">
+                    <h4 style="font-weight: 700; color: #166534; margin-bottom: 8px;">✅ Positive Findings</h4>
+                    <ul style="list-style: none; padding: 0; margin: 0; color: #15803D;">
+                        ${analysis.positives.map(p => `<li style="margin-bottom: 4px;">• ${p}</li>`).join('')}
                     </ul>
                 </div>
             ` : ''}
             
             ${analysis.concerns.length > 0 ? `
-                <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-                    <h4 class="font-bold text-yellow-800 mb-2">⚠️ Items to Discuss</h4>
-                    <ul class="space-y-1 text-yellow-700">
-                        ${analysis.concerns.map(c => `<li>• ${c}</li>`).join('')}
+                <div style="background: #FFFBEB; border: 1px solid #FDE68A; border-radius: 8px; padding: 16px;">
+                    <h4 style="font-weight: 700; color: #92400E; margin-bottom: 8px;">⚠️ Items to Discuss</h4>
+                    <ul style="list-style: none; padding: 0; margin: 0; color: #B45309;">
+                        ${analysis.concerns.map(c => `<li style="margin-bottom: 4px;">• ${c}</li>`).join('')}
                     </ul>
                 </div>
             ` : ''}
             
             ${analysis.recommendations.length > 0 ? `
-                <div class="bg-purple-50 border border-purple-200 rounded-lg p-4">
-                    <h4 class="font-bold text-purple-800 mb-2">💡 Recommendations</h4>
-                    <ul class="space-y-1 text-purple-700">
-                        ${analysis.recommendations.map(r => `<li>• ${r}</li>`).join('')}
+                <div style="background: #FAF5FF; border: 1px solid #E9D5FF; border-radius: 8px; padding: 16px;">
+                    <h4 style="font-weight: 700; color: #7E22CE; margin-bottom: 8px;">💡 Recommendations</h4>
+                    <ul style="list-style: none; padding: 0; margin: 0; color: #9333EA;">
+                        ${analysis.recommendations.map(r => `<li style="margin-bottom: 4px;">• ${r}</li>`).join('')}
                     </ul>
                 </div>
             ` : ''}
         </div>
         
-        <div class="mt-6 flex gap-3">
-            <button onclick="location.reload()" class="flex-1 bg-green-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-700">
-                🔄 Refresh Page to See Updates
+        <div style="margin-top: 24px; display: flex; gap: 12px;">
+            <button onclick="closeLabModal()" style="flex: 1; background: #10B981; color: white; font-weight: 700; padding: 12px 16px; border-radius: 8px; border: none; cursor: pointer;">
+                ✓ Done
             </button>
-            <button onclick="closeLabModal()" class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50">
+            <button onclick="closeLabModal()" style="padding: 12px 16px; border: 1px solid #D1D5DB; border-radius: 8px; background: #fff; cursor: pointer;">
                 Close
             </button>
         </div>

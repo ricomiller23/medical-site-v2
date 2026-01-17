@@ -99,19 +99,19 @@ class MedicalCharts {
 
     getDefaultLabData() {
         return {
-            dates: ['Nov 7', 'Dec 26', 'Jan 2', 'Jan 9'],
-            weeks: ['Baseline', 'Day 5', 'Week 2', 'Week 3'],
-            wbc: [7.8, 9.4, 7.2, 9.0],
-            hemoglobin: [14.2, 16.4, 15.3, 17.0],
-            platelets: [245, 293, 203, 241],
-            anc: [null, 5.3, 4.1, 6.2],
-            alc: [null, 3.1, 2.3, 2.0],
-            egfr: [null, null, null, 103],
-            sodium: [null, null, null, 134],
-            calcium: [null, null, null, 9.5],
-            creatinine: [null, null, null, 0.78],
-            freeKappa: [655.69, null, null, null],
-            mSpike: [1.07, null, null, null]
+            dates: ['Nov 7', 'Dec 26', 'Jan 2', 'Jan 9', 'Jan 16'],
+            weeks: ['Baseline', 'Day 5', 'Week 2', 'Week 3', 'Week 4'],
+            wbc: [7.8, 9.4, 7.2, 9.0, 7.2],
+            hemoglobin: [14.2, 16.4, 15.3, 17.0, 15.8],
+            platelets: [245, 293, 203, 241, 254],
+            anc: [null, 5.3, 4.1, 6.2, 4.1],
+            alc: [null, 3.1, 2.3, 2.0, 2.3],
+            egfr: [null, null, null, 103, 104],
+            sodium: [null, null, null, 134, 134],
+            calcium: [null, null, null, 9.5, 9.2],
+            creatinine: [null, null, null, 0.78, 0.76],
+            freeKappa: [655.69, null, null, null, null],
+            mSpike: [1.07, null, null, null, null]
         };
     }
 
