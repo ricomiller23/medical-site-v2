@@ -1183,6 +1183,180 @@
         // Log that the function is ready
         console.log('✅ fetchMyelomaNews is ready:', typeof window.fetchMyelomaNews);
 
+        // ===== DYNAMIC UI UPDATE FUNCTIONS =====
+        // Update dashboard cards with latest lab data
+        window.updateDashboardUI = function () {
+            const stored = localStorage.getItem('ericMillerLabResults');
+            if (!stored) return;
+
+            const labs = JSON.parse(stored);
+            labs.sort((a, b) => new Date(b.date) - new Date(a.date));
+            const latest = labs[0];
+            const previous = labs[1];
+
+            const dashboardContainer = document.querySelector('.grid-4.reveal');
+            if (!dashboardContainer) return;
+
+            const getStatus = (value, min, max) => {
+                if (value === undefined || value === null) return { status: 'unknown', bg: '#F5F5F5', border: '#E5E5E5', color: '#666', label: 'N/A' };
+                if (value < min) return { status: 'low', bg: '#FFFBEB', border: '#FDE68A', color: '#92400E', label: 'LOW' };
+                if (value > max) return { status: 'high', bg: '#FEF2F2', border: '#FECACA', color: '#991B1B', label: 'HIGH' };
+                return { status: 'normal', bg: '#F0FDF4', border: '#BBF7D0', color: '#166534', label: 'NORMAL' };
+            };
+
+            const getChange = (current, prev, key) => {
+                if (!prev || prev[key] === undefined || current === undefined) return '';
+                const change = ((current - prev[key]) / prev[key] * 100).toFixed(0);
+                return change > 0 ? `↑${change}%` : change < 0 ? `↓${Math.abs(change)}%` : '→';
+            };
+
+            const wbcStatus = getStatus(latest.wbc, 4.0, 11.0);
+            const egfrStatus = latest.egfr >= 90 ? { status: 'excellent', bg: '#F0FDF4', border: '#BBF7D0', color: '#166534', label: 'EXCELLENT' } : getStatus(latest.egfr, 60, 150);
+            const sodiumStatus = getStatus(latest.sodium, 135, 145);
+            const freeKappaStatus = latest.freeKappa ? { status: 'elevated', bg: '#FEF2F2', border: '#FECACA', color: '#991B1B', label: 'PENDING' } : { status: 'unknown', bg: '#F5F5F5', border: '#E5E5E5', color: '#666', label: 'N/A' };
+
+            const labelColors = {
+                'NORMAL': '#10B981',
+                'EXCELLENT': '#10B981',
+                'LOW': '#F59E0B',
+                'HIGH': '#EF4444',
+                'PENDING': '#EF4444',
+                'N/A': '#666'
+            };
+
+            const wbcChange = getChange(latest.wbc, previous, 'wbc');
+
+            dashboardContainer.innerHTML = `
+                <div style="background: ${wbcStatus.bg}; border: 1px solid ${wbcStatus.border}; padding: 32px; border-radius: 12px;">
+                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 16px;">
+                        <span style="font-size: 32px;">${wbcStatus.status === 'normal' ? '✅' : '⚠️'}</span>
+                        <span style="font-size: 12px; background: ${labelColors[wbcStatus.label]}; color: white; padding: 4px 12px; border-radius: 100px;">${wbcStatus.label}</span>
+                    </div>
+                    <div style="font-size: 36px; font-weight: 600; margin-bottom: 4px;">${latest.wbc || 'N/A'}</div>
+                    <div style="font-size: 14px; color: ${wbcStatus.color};">WBC ${wbcChange ? '— ' + wbcChange + ' from prev' : ''}</div>
+                </div>
+                <div style="background: ${egfrStatus.bg}; border: 1px solid ${egfrStatus.border}; padding: 32px; border-radius: 12px;">
+                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 16px;">
+                        <span style="font-size: 32px;">${egfrStatus.status === 'excellent' || egfrStatus.status === 'normal' ? '✅' : '⚠️'}</span>
+                        <span style="font-size: 12px; background: ${labelColors[egfrStatus.label]}; color: white; padding: 4px 12px; border-radius: 100px;">${egfrStatus.label}</span>
+                    </div>
+                    <div style="font-size: 36px; font-weight: 600; margin-bottom: 4px;">${latest.egfr || 'N/A'}</div>
+                    <div style="font-size: 14px; color: ${egfrStatus.color};">eGFR — Kidney Function</div>
+                </div>
+                <div style="background: ${sodiumStatus.bg}; border: 1px solid ${sodiumStatus.border}; padding: 32px; border-radius: 12px;">
+                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 16px;">
+                        <span style="font-size: 32px;">${sodiumStatus.status === 'normal' ? '✅' : '⚠️'}</span>
+                        <span style="font-size: 12px; background: ${labelColors[sodiumStatus.label]}; color: white; padding: 4px 12px; border-radius: 100px;">${sodiumStatus.label}</span>
+                    </div>
+                    <div style="font-size: 36px; font-weight: 600; margin-bottom: 4px;">${latest.sodium || 'N/A'}</div>
+                    <div style="font-size: 14px; color: ${sodiumStatus.color};">Sodium — ${sodiumStatus.status === 'low' ? 'Stay Hydrated' : 'Normal'}</div>
+                </div>
+                <div style="background: ${freeKappaStatus.bg}; border: 1px solid ${freeKappaStatus.border}; padding: 32px; border-radius: 12px;">
+                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 16px;">
+                        <span style="font-size: 32px;">🎯</span>
+                        <span style="font-size: 12px; background: ${labelColors[freeKappaStatus.label]}; color: white; padding: 4px 12px; border-radius: 100px;">${freeKappaStatus.label}</span>
+                    </div>
+                    <div style="font-size: 36px; font-weight: 600; margin-bottom: 4px;">${latest.freeKappa ? Math.round(latest.freeKappa) : '—'}</div>
+                    <div style="font-size: 14px; color: ${freeKappaStatus.color};">Free Kappa — Target ≤${latest.freeKappa ? Math.round(latest.freeKappa / 2) : 328}</div>
+                </div>
+            `;
+
+            console.log('📊 Dashboard updated with latest lab values');
+        };
+
+        // Update labs section with latest data
+        window.updateLabsSection = function () {
+            const stored = localStorage.getItem('ericMillerLabResults');
+            if (!stored) return;
+
+            const labs = JSON.parse(stored);
+            labs.sort((a, b) => new Date(b.date) - new Date(a.date));
+            const latest = labs[0];
+
+            // Update the week header
+            const labsSection = document.getElementById('labs');
+            if (!labsSection) return;
+
+            const weekHeader = labsSection.querySelector('.display-large');
+            const dateHeader = labsSection.querySelectorAll('.eyebrow')[1];
+
+            if (weekHeader && latest.week) {
+                weekHeader.textContent = latest.week;
+            }
+            if (dateHeader && latest.date) {
+                const d = new Date(latest.date);
+                dateHeader.textContent = d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+            }
+
+            // Update CBC table
+            const getStatusClass = (value, min, max) => {
+                if (value === undefined || value === null) return '';
+                if (value < min || value > max) return 'status-warning';
+                return 'status-normal';
+            };
+
+            const cbcTable = labsSection.querySelectorAll('table')[0];
+            if (cbcTable && latest) {
+                cbcTable.innerHTML = `
+                    <tr>
+                        <td style="color: rgba(255,255,255,0.5);">WBC</td>
+                        <td style="text-align: right;"><span class="${getStatusClass(latest.wbc, 4.0, 11.0)}">${latest.wbc || '—'}</span> K/μL</td>
+                    </tr>
+                    <tr>
+                        <td style="color: rgba(255,255,255,0.5);">Hemoglobin</td>
+                        <td style="text-align: right;"><span class="${getStatusClass(latest.hemoglobin, 13.5, 17.0)}">${latest.hemoglobin || '—'}</span> g/dL</td>
+                    </tr>
+                    <tr>
+                        <td style="color: rgba(255,255,255,0.5);">Platelets</td>
+                        <td style="text-align: right;"><span class="${getStatusClass(latest.platelets, 130, 450)}">${latest.platelets || '—'}</span> K/μL</td>
+                    </tr>
+                    <tr>
+                        <td style="color: rgba(255,255,255,0.5);">ANC</td>
+                        <td style="text-align: right;"><span class="${getStatusClass(latest.anc, 1.5, 7.8)}">${latest.anc || '—'}</span> K/μL</td>
+                    </tr>
+                    <tr>
+                        <td style="color: rgba(255,255,255,0.5);">ALC</td>
+                        <td style="text-align: right;"><span class="${getStatusClass(latest.alc, 0.9, 3.9)}">${latest.alc || '—'}</span> K/μL</td>
+                    </tr>
+                `;
+            }
+
+            // Update CMP table
+            const cmpTable = labsSection.querySelectorAll('table')[1];
+            if (cmpTable && latest) {
+                cmpTable.innerHTML = `
+                    <tr>
+                        <td style="color: rgba(255,255,255,0.5);">Creatinine</td>
+                        <td style="text-align: right;"><span class="${getStatusClass(latest.creatinine, 0.68, 1.37)}">${latest.creatinine || '—'}</span> mg/dL</td>
+                    </tr>
+                    <tr>
+                        <td style="color: rgba(255,255,255,0.5);">eGFR</td>
+                        <td style="text-align: right;"><span class="${getStatusClass(latest.egfr, 60, 150)}">${latest.egfr || '—'}</span> mL/min</td>
+                    </tr>
+                    <tr>
+                        <td style="color: rgba(255,255,255,0.5);">Calcium</td>
+                        <td style="text-align: right;"><span class="${getStatusClass(latest.calcium, 8.7, 10.4)}">${latest.calcium || '—'}</span> mg/dL</td>
+                    </tr>
+                    <tr>
+                        <td style="color: rgba(255,255,255,0.5);">Sodium</td>
+                        <td style="text-align: right;"><span class="${getStatusClass(latest.sodium, 135, 145)}">${latest.sodium || '—'}</span> mmol/L${latest.sodium && latest.sodium < 135 ? ' ↓' : ''}</td>
+                    </tr>
+                    <tr>
+                        <td style="color: rgba(255,255,255,0.5);">Chloride</td>
+                        <td style="text-align: right;"><span class="status-normal">—</span> mmol/L</td>
+                    </tr>
+                `;
+            }
+
+            console.log('📊 Labs section updated with latest values');
+        };
+
+        // Initialize UI updates on page load
+        document.addEventListener('DOMContentLoaded', function () {
+            window.updateDashboardUI();
+            window.updateLabsSection();
+        });
+
         // ===== REVEAL ANIMATIONS =====
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {

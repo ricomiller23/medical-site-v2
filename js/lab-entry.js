@@ -297,6 +297,22 @@ function createLabEntryModal() {
 
         const analysis = window.labTracker.addLab(labData);
         showAnalysisResult(analysis);
+
+        // Trigger UI updates
+        if (typeof updateDashboardUI === 'function') {
+            updateDashboardUI();
+        }
+        if (typeof updateLabsSection === 'function') {
+            updateLabsSection();
+        }
+        if (window.medicalCharts && typeof window.medicalCharts.refresh === 'function') {
+            window.medicalCharts.refresh();
+        }
+        if (typeof updateLabTrackerTable === 'function') {
+            updateLabTrackerTable();
+        }
+
+        console.log('🧪 Lab added and UI updated');
     });
 }
 

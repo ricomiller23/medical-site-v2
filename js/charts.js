@@ -1,20 +1,11 @@
 // MEDICAL PORTAL - INTERACTIVE CHARTS MODULE
 // Uses Chart.js for lab trend visualizations with predictions
+// Now integrated with LabTracker for dynamic data
 
 class MedicalCharts {
     constructor() {
-        this.labData = {
-            dates: ['Nov 7', 'Dec 26', 'Jan 2', 'Jan 9'],
-            weeks: ['Baseline', 'Day 5', 'Week 2', 'Week 3'],
-            wbc: [7.8, 9.4, 7.2, 9.0],
-            hemoglobin: [14.2, 16.4, 15.3, 17.0],
-            platelets: [245, 293, 203, 241],
-            anc: [null, 5.3, 4.1, 6.2],
-            alc: [null, 3.1, 2.3, 2.0],
-            egfr: [null, null, null, 103],
-            freeKappa: [655.69, null, null, null],
-            mSpike: [1.07, null, null, null]
-        };
+        // Load data from labTracker if available, otherwise use defaults
+        this.loadFromLabTracker();
 
         this.referenceRanges = {
             wbc: { min: 4.0, max: 11.0, good: true },
@@ -25,6 +16,8 @@ class MedicalCharts {
             freeKappa: { min: 0.33, max: 1.94, good: false },
             mSpike: { min: 0, max: 0.3, good: false }
         };
+
+        this.chartInstances = {};
 
         this.chartDefaults = {
             responsive: true,
@@ -59,12 +52,97 @@ class MedicalCharts {
         };
     }
 
+    // Load lab data from labTracker localStorage
+    loadFromLabTracker() {
+        try {
+            const stored = localStorage.getItem('ericMillerLabResults');
+            if (stored) {
+                const labs = JSON.parse(stored);
+                this.labData = this.transformLabData(labs);
+                console.log('📊 Charts: Loaded', labs.length, 'lab entries from storage');
+            } else {
+                this.labData = this.getDefaultLabData();
+            }
+        } catch (e) {
+            console.warn('Charts: Could not load from storage, using defaults');
+            this.labData = this.getDefaultLabData();
+        }
+    }
+
+    // Transform labTracker format to chart format
+    transformLabData(labs) {
+        // Sort by date
+        labs.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+        return {
+            dates: labs.map(l => this.formatDate(l.date)),
+            weeks: labs.map(l => l.week || this.formatDate(l.date)),
+            wbc: labs.map(l => l.wbc || null),
+            hemoglobin: labs.map(l => l.hemoglobin || null),
+            platelets: labs.map(l => l.platelets || null),
+            anc: labs.map(l => l.anc || null),
+            alc: labs.map(l => l.alc || null),
+            egfr: labs.map(l => l.egfr || null),
+            sodium: labs.map(l => l.sodium || null),
+            calcium: labs.map(l => l.calcium || null),
+            creatinine: labs.map(l => l.creatinine || null),
+            freeKappa: labs.map(l => l.freeKappa || null),
+            mSpike: labs.map(l => l.mSpike || null)
+        };
+    }
+
+    formatDate(dateStr) {
+        if (!dateStr) return '';
+        const d = new Date(dateStr);
+        return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    }
+
+    getDefaultLabData() {
+        return {
+            dates: ['Nov 7', 'Dec 26', 'Jan 2', 'Jan 9'],
+            weeks: ['Baseline', 'Day 5', 'Week 2', 'Week 3'],
+            wbc: [7.8, 9.4, 7.2, 9.0],
+            hemoglobin: [14.2, 16.4, 15.3, 17.0],
+            platelets: [245, 293, 203, 241],
+            anc: [null, 5.3, 4.1, 6.2],
+            alc: [null, 3.1, 2.3, 2.0],
+            egfr: [null, null, null, 103],
+            sodium: [null, null, null, 134],
+            calcium: [null, null, null, 9.5],
+            creatinine: [null, null, null, 0.78],
+            freeKappa: [655.69, null, null, null],
+            mSpike: [1.07, null, null, null]
+        };
+    }
+
+    // Refresh charts with latest data
+    refresh() {
+        this.loadFromLabTracker();
+        Object.values(this.chartInstances).forEach(chart => {
+            if (chart) chart.destroy();
+        });
+        this.chartInstances = {};
+        this.init();
+        console.log('📊 Charts refreshed with latest data');
+    }
+
+    // Get latest lab entry
+    getLatestLab() {
+        const stored = localStorage.getItem('ericMillerLabResults');
+        if (stored) {
+            const labs = JSON.parse(stored);
+            labs.sort((a, b) => new Date(b.date) - new Date(a.date));
+            return labs[0];
+        }
+        return null;
+    }
+
     // Create CBC Trends Chart
     createCBCChart(canvasId) {
         const ctx = document.getElementById(canvasId);
         if (!ctx) return;
 
-        new Chart(ctx, {
+        this.chartInstances.cbc = new Chart(ctx, {
             type: 'line',
             data: {
                 labels: this.labData.weeks,
@@ -87,7 +165,7 @@ class MedicalCharts {
                     },
                     {
                         label: 'Platelets (÷10 K/μL)',
-                        data: this.labData.platelets.map(v => v / 10),
+                        data: this.labData.platelets.map(v => v ? v / 10 : null),
                         borderColor: '#F59E0B',
                         backgroundColor: 'rgba(245, 158, 11, 0.1)',
                         tension: 0.3,
@@ -126,12 +204,15 @@ class MedicalCharts {
         const ctx = document.getElementById(canvasId);
         if (!ctx) return;
 
+        // Get actual Free Kappa values from data
+        const actualFreeKappa = this.labData.freeKappa.filter(v => v !== null);
+        const baselineFreeKappa = actualFreeKappa[0] || 655.69;
+
         // Project future values (target 50% reduction)
-        const projectedFreeKappa = [655.69, 500, 400, 328, 200, 100];
-        const projectedMSpike = [1.07, 0.85, 0.65, 0.45, 0.25, 0.10];
+        const projectedFreeKappa = [baselineFreeKappa, baselineFreeKappa * 0.76, baselineFreeKappa * 0.61, baselineFreeKappa * 0.5, baselineFreeKappa * 0.3, baselineFreeKappa * 0.15];
         const projectedLabels = ['Baseline', 'Week 2', 'Week 4', 'Week 8', 'Week 12', 'Week 16'];
 
-        new Chart(ctx, {
+        this.chartInstances.disease = new Chart(ctx, {
             type: 'line',
             data: {
                 labels: projectedLabels,
@@ -148,8 +229,8 @@ class MedicalCharts {
                         borderDash: [0, 0, 5, 5]
                     },
                     {
-                        label: 'Target Zone (≤328)',
-                        data: [328, 328, 328, 328, 328, 328],
+                        label: `Target Zone (≤${Math.round(baselineFreeKappa / 2)})`,
+                        data: Array(6).fill(baselineFreeKappa / 2),
                         borderColor: '#10B981',
                         borderDash: [5, 5],
                         borderWidth: 2,
@@ -165,7 +246,7 @@ class MedicalCharts {
                     y: {
                         ...this.chartDefaults.scales.y,
                         min: 0,
-                        max: 700
+                        max: Math.ceil(baselineFreeKappa * 1.1)
                     }
                 },
                 plugins: {
@@ -186,18 +267,25 @@ class MedicalCharts {
         const ctx = document.getElementById(canvasId);
         if (!ctx) return;
 
-        new Chart(ctx, {
+        // Get latest values from labData
+        const latestIdx = this.labData.creatinine.length - 1;
+        const creatinine = this.labData.creatinine.filter(v => v !== null).pop() || 0.78;
+        const egfr = this.labData.egfr.filter(v => v !== null).pop() || 103;
+        const sodium = this.labData.sodium.filter(v => v !== null).pop() || 134;
+        const calcium = this.labData.calcium.filter(v => v !== null).pop() || 9.5;
+
+        this.chartInstances.kidney = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ['Creatinine', 'eGFR', 'Sodium', 'Chloride'],
+                labels: ['Creatinine', 'eGFR', 'Sodium', 'Calcium'],
                 datasets: [{
-                    label: 'Week 3 Values',
-                    data: [0.78, 103, 134, 92],
+                    label: 'Latest Values',
+                    data: [creatinine, egfr, sodium * 0.1, calcium],
                     backgroundColor: [
-                        'rgba(16, 185, 129, 0.8)',
-                        'rgba(16, 185, 129, 0.8)',
-                        'rgba(245, 158, 11, 0.8)',
-                        'rgba(245, 158, 11, 0.8)'
+                        creatinine >= 0.68 && creatinine <= 1.37 ? 'rgba(16, 185, 129, 0.8)' : 'rgba(245, 158, 11, 0.8)',
+                        egfr >= 60 ? 'rgba(16, 185, 129, 0.8)' : 'rgba(245, 158, 11, 0.8)',
+                        sodium >= 135 && sodium <= 145 ? 'rgba(16, 185, 129, 0.8)' : 'rgba(245, 158, 11, 0.8)',
+                        calcium >= 8.7 && calcium <= 10.4 ? 'rgba(16, 185, 129, 0.8)' : 'rgba(245, 158, 11, 0.8)'
                     ],
                     borderRadius: 8
                 }]
@@ -209,7 +297,7 @@ class MedicalCharts {
                     ...this.chartDefaults.plugins,
                     title: {
                         display: true,
-                        text: 'Metabolic Panel — Week 3',
+                        text: 'Metabolic Panel — Latest',
                         font: { family: 'Inter', size: 16, weight: 500 },
                         padding: { bottom: 20 }
                     },
@@ -224,7 +312,7 @@ class MedicalCharts {
         const ctx = document.getElementById(canvasId);
         if (!ctx) return;
 
-        new Chart(ctx, {
+        this.chartInstances.qol = new Chart(ctx, {
             type: 'line',
             data: {
                 labels: ['Now', 'Yr 1', 'Yr 2', 'Yr 3', 'Yr 5', 'Yr 7', 'Yr 10', 'Yr 15', 'Yr 20'],
@@ -295,24 +383,34 @@ class MedicalCharts {
         });
     }
 
-    // Generate Status Summary
+    // Generate Status Summary from latest lab data
     getStatusSummary() {
-        const latest = {
-            wbc: this.labData.wbc[this.labData.wbc.length - 1],
-            hemoglobin: this.labData.hemoglobin[this.labData.hemoglobin.length - 1],
-            platelets: this.labData.platelets[this.labData.platelets.length - 1],
-            egfr: 103,
-            sodium: 134,
-            freeKappa: 655.69
+        const latestLab = this.getLatestLab();
+        if (!latestLab) {
+            return {
+                wbc: { value: 9.0, status: 'normal', trend: 'up', change: '+25%' },
+                hemoglobin: { value: 17.0, status: 'normal', trend: 'up', change: '+11%' },
+                platelets: { value: 241, status: 'normal', trend: 'stable', change: '-2%' },
+                egfr: { value: 103, status: 'excellent', trend: 'stable', change: 'N/A' },
+                sodium: { value: 134, status: 'low', trend: 'down', change: '-1' },
+                freeKappa: { value: 655.69, status: 'elevated', trend: 'pending', change: 'Week 4' }
+            };
+        }
+
+        const getStatus = (value, min, max) => {
+            if (value === undefined || value === null) return 'unknown';
+            if (value < min) return 'low';
+            if (value > max) return 'high';
+            return 'normal';
         };
 
         return {
-            wbc: { value: latest.wbc, status: 'normal', trend: 'up', change: '+25%' },
-            hemoglobin: { value: latest.hemoglobin, status: 'normal', trend: 'up', change: '+11%' },
-            platelets: { value: latest.platelets, status: 'normal', trend: 'stable', change: '-2%' },
-            egfr: { value: latest.egfr, status: 'excellent', trend: 'stable', change: 'N/A' },
-            sodium: { value: latest.sodium, status: 'low', trend: 'down', change: '-1' },
-            freeKappa: { value: latest.freeKappa, status: 'elevated', trend: 'pending', change: 'Week 4' }
+            wbc: { value: latestLab.wbc, status: getStatus(latestLab.wbc, 4.0, 11.0) },
+            hemoglobin: { value: latestLab.hemoglobin, status: getStatus(latestLab.hemoglobin, 13.5, 17.0) },
+            platelets: { value: latestLab.platelets, status: getStatus(latestLab.platelets, 130, 450) },
+            egfr: { value: latestLab.egfr, status: latestLab.egfr >= 90 ? 'excellent' : getStatus(latestLab.egfr, 60, 150) },
+            sodium: { value: latestLab.sodium, status: getStatus(latestLab.sodium, 135, 145) },
+            freeKappa: { value: latestLab.freeKappa, status: latestLab.freeKappa ? 'elevated' : 'pending' }
         };
     }
 
@@ -331,7 +429,7 @@ class MedicalCharts {
         this.createKidneyChart('kidney-chart');
         this.createQoLChart('qol-chart');
 
-        console.log('📊 Medical charts initialized');
+        console.log('📊 Medical charts initialized with', this.labData.weeks.length, 'data points');
     }
 }
 

@@ -476,11 +476,124 @@
         </div>
     </section>
 
+    <script src="js/lab-entry.js"></script>
     <script>
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
         }, { threshold: 0.1 });
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Dynamic Lab Tracker Table Update
+        function updateLabTrackerTable() {
+            const stored = localStorage.getItem('ericMillerLabResults');
+            if (!stored) return;
+
+            const labs = JSON.parse(stored);
+            labs.sort((a, b) => new Date(b.date) - new Date(a.date)); // Most recent first
+
+            // Update CBC table
+            const cbcTable = document.querySelector('.section-dark table tbody');
+            if (cbcTable) {
+                cbcTable.innerHTML = labs.map((lab, i) => {
+                    const prev = labs[i + 1];
+                    const getTrend = (current, previous) => {
+                        if (!current || !previous) return '';
+                        const diff = current - previous;
+                        if (diff > 0) return '<span class="trend-up">↑</span>';
+                        if (diff < 0) return '<span class="trend-down">↓</span>';
+                        return '';
+                    };
+
+                    const getStatusClass = (value, min, max) => {
+                        if (value === undefined || value === null) return '';
+                        if (value < min || value > max) return 'warning';
+                        return 'normal';
+                    };
+
+                    const dateObj = new Date(lab.date);
+                    const dateStr = dateObj.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' });
+
+                    return `
+                        <tr>
+                            <td><strong>${dateStr}</strong><br><span style="font-size: 12px; color: rgba(255,255,255,0.5);">${lab.week || ''}</span></td>
+                            <td class="${getStatusClass(lab.wbc, 4.0, 11.0)}">${lab.wbc || '—'} ${getTrend(lab.wbc, prev?.wbc)}</td>
+                            <td class="${getStatusClass(lab.hemoglobin, 13.5, 17.0)}">${lab.hemoglobin || '—'} ${getTrend(lab.hemoglobin, prev?.hemoglobin)}</td>
+                            <td class="${getStatusClass(lab.platelets, 130, 450)}">${lab.platelets || '—'} ${getTrend(lab.platelets, prev?.platelets)}</td>
+                            <td class="${getStatusClass(lab.anc, 1.5, 7.8)}">${lab.anc || '—'} ${getTrend(lab.anc, prev?.anc)}</td>
+                            <td class="${getStatusClass(lab.alc, 0.9, 3.9)}">${lab.alc || '—'}</td>
+                            <td>${lab.egfr ? 'Includes CMP' : ''}</td>
+                        </tr>
+                    `;
+                }).join('');
+            }
+
+            // Update disease markers table
+            const diseaseTable = document.querySelectorAll('.section-dark')[1]?.querySelector('table tbody');
+            if (diseaseTable) {
+                const markersData = labs.filter(l => l.freeKappa || l.mSpike).sort((a, b) => new Date(a.date) - new Date(b.date));
+                if (markersData.length > 0) {
+                    const baseline = markersData[0];
+
+                    diseaseTable.innerHTML = markersData.map((lab, i) => {
+                        const dateObj = new Date(lab.date);
+                        const dateStr = dateObj.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' });
+
+                        let percentChange = '—';
+                        if (i > 0 && baseline.freeKappa && lab.freeKappa) {
+                            const change = ((baseline.freeKappa - lab.freeKappa) / baseline.freeKappa * 100).toFixed(1);
+                            percentChange = `${change}%`;
+                        }
+
+                        return `
+                            <tr>
+                                <td><strong>${dateStr}</strong> ${lab.week || ''}</td>
+                                <td class="warning">${lab.freeKappa ? lab.freeKappa.toFixed(2) + ' mg/L' : '—'}</td>
+                                <td class="warning">${lab.freeKappa ? (lab.freeKappa / 12.5).toFixed(2) : '—'}</td>
+                                <td class="warning">${lab.mSpike ? lab.mSpike.toFixed(2) + ' g/dL' : '—'}</td>
+                                <td>${percentChange}</td>
+                            </tr>
+                        `;
+                    }).join('') + `
+                        <tr>
+                            <td colspan="5" style="text-align: center; padding: 30px; color: rgba(255,255,255,0.6);">
+                                Next disease marker check: <strong>Week 4</strong><br>
+                                <span style="font-size: 14px;">Target: ≥50% reduction in Free Kappa</span>
+                            </td>
+                        </tr>
+                    `;
+                }
+            }
+
+            // Update quick summary
+            const summaryBox = document.querySelector('.summary-box p');
+            if (summaryBox && labs.length > 0) {
+                const latest = labs[0];
+                let summary = [];
+
+                if (latest.wbc) summary.push(`WBC ${latest.wbc >= 4 && latest.wbc <= 11 ? 'normal' : 'needs attention'}`);
+                if (latest.hemoglobin) summary.push(`Hemoglobin ${latest.hemoglobin >= 13.5 ? 'good' : 'low'}`);
+                if (latest.egfr) summary.push(`eGFR ${latest.egfr} (${latest.egfr >= 90 ? 'excellent' : 'good'})`);
+                if (latest.sodium && latest.sodium < 135) summary.push('Sodium low — stay hydrated');
+
+                if (summary.length > 0) {
+                    summaryBox.textContent = summary.join('. ') + '. Discuss any concerns with your oncologist.';
+                }
+            }
+
+            // Update last updated date
+            const lastUpdatedEl = document.querySelector('section:last-of-type p:last-child');
+            if (lastUpdatedEl) {
+                lastUpdatedEl.textContent = `Last Updated: ${new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}`;
+            }
+
+            console.log('📊 Lab Tracker table updated with', labs.length, 'entries');
+        }
+
+        // Make function globally available
+        window.updateLabTrackerTable = updateLabTrackerTable;
+
+        // Run on page load
+        document.addEventListener('DOMContentLoaded', updateLabTrackerTable);
     </script>
 </body>
 
