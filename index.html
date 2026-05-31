@@ -449,18 +449,30 @@
 
     <!-- DASHBOARD CARDS -->
     <section>
-        <p class="eyebrow reveal">Current Status</p>
+        <p class="eyebrow reveal">Current Status — Week 27 Follow-up</p>
         <h2 class="display-medium reveal" style="margin: 40px 0 60px;">Dashboard</h2>
+
+        <!-- Treatment Success Banner -->
+        <div class="reveal"
+            style="background: linear-gradient(135deg, #065F46 0%, #047857 100%); padding: 24px 32px; border-radius: 12px; margin-bottom: 32px; border: 2px solid #10B981; display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
+            <span style="font-size: 48px;">🎯</span>
+            <div>
+                <div style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; color: #A7F3D0;">
+                    Treatment Response — May 26, 2026</div>
+                <div style="font-size: 32px; font-weight: 600; color: #ECFDF5;">90.1% Free Kappa Reduction</div>
+                <div style="font-size: 14px; color: #D1FAE5;">655.69 → 64.74 mg/L — <strong>Exceeds 50% target!</strong> (M-Spike down 54.2% to 0.49 g/dL)</div>
+            </div>
+        </div>
 
         <div class="grid-4 reveal" style="gap: 24px;">
             <div style="background: #F0FDF4; border: 1px solid #BBF7D0; padding: 32px; border-radius: 12px;">
                 <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 16px;">
-                    <span style="font-size: 32px;">✅</span>
+                    <span style="font-size: 32px;">🎉</span>
                     <span
-                        style="font-size: 12px; background: #10B981; color: white; padding: 4px 12px; border-radius: 100px;">NORMAL</span>
+                        style="font-size: 12px; background: #10B981; color: white; padding: 4px 12px; border-radius: 100px;">TARGET MET</span>
                 </div>
-                <div style="font-size: 36px; font-weight: 600; margin-bottom: 4px;">9.0</div>
-                <div style="font-size: 14px; color: #166534;">WBC — ↑25% from Week 2</div>
+                <div style="font-size: 36px; font-weight: 600; margin-bottom: 4px;">65</div>
+                <div style="font-size: 14px; color: #166534;">Free Kappa — ↓90.1%</div>
             </div>
             <div style="background: #F0FDF4; border: 1px solid #BBF7D0; padding: 32px; border-radius: 12px;">
                 <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 16px;">
@@ -468,32 +480,32 @@
                     <span
                         style="font-size: 12px; background: #10B981; color: white; padding: 4px 12px; border-radius: 100px;">EXCELLENT</span>
                 </div>
-                <div style="font-size: 36px; font-weight: 600; margin-bottom: 4px;">103</div>
+                <div style="font-size: 36px; font-weight: 600; margin-bottom: 4px;">108</div>
                 <div style="font-size: 14px; color: #166534;">eGFR — Kidney Function</div>
             </div>
-            <div style="background: #FFFBEB; border: 1px solid #FDE68A; padding: 32px; border-radius: 12px;">
+            <div style="background: #F0FDF4; border: 1px solid #BBF7D0; padding: 32px; border-radius: 12px;">
                 <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 16px;">
-                    <span style="font-size: 32px;">⚠️</span>
+                    <span style="font-size: 32px;">✅</span>
                     <span
-                        style="font-size: 12px; background: #F59E0B; color: white; padding: 4px 12px; border-radius: 100px;">LOW</span>
+                        style="font-size: 12px; background: #10B981; color: white; padding: 4px 12px; border-radius: 100px;">NORMAL</span>
                 </div>
-                <div style="font-size: 36px; font-weight: 600; margin-bottom: 4px;">134</div>
-                <div style="font-size: 14px; color: #92400E;">Sodium — Stay Hydrated</div>
+                <div style="font-size: 36px; font-weight: 600; margin-bottom: 4px;">138</div>
+                <div style="font-size: 14px; color: #166534;">Sodium — Electrolytes Normal</div>
             </div>
-            <div style="background: #FEF2F2; border: 1px solid #FECACA; padding: 32px; border-radius: 12px;">
+            <div style="background: #F0FDF4; border: 1px solid #BBF7D0; padding: 32px; border-radius: 12px;">
                 <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 16px;">
-                    <span style="font-size: 32px;">🎯</span>
+                    <span style="font-size: 32px;">✅</span>
                     <span
-                        style="font-size: 12px; background: #EF4444; color: white; padding: 4px 12px; border-radius: 100px;">PENDING</span>
+                        style="font-size: 12px; background: #10B981; color: white; padding: 4px 12px; border-radius: 100px;">NORMAL</span>
                 </div>
-                <div style="font-size: 36px; font-weight: 600; margin-bottom: 4px;">655</div>
-                <div style="font-size: 14px; color: #991B1B;">Free Kappa — Target ≤328</div>
+                <div style="font-size: 36px; font-weight: 600; margin-bottom: 4px;">8.0</div>
+                <div style="font-size: 14px; color: #166534;">WBC — Stable</div>
             </div>
         </div>
 
         <div style="display: flex; gap: 16px; margin-top: 40px;" class="reveal">
             <button onclick="openSymptomModal()" class="pill">📝 Log Symptoms</button>
-            <a href="lab-tracker.html" class="pill">📊 All Labs →</a>
+            <a href="lab-tracker.html" class="pill pill-filled">📊 All Labs →</a>
         </div>
     </section>
 
@@ -521,14 +533,10 @@
             class="reveal">
             <h3 style="font-size: 18px; margin-bottom: 16px; font-weight: 500;">📊 Analysis Summary</h3>
             <p style="color: rgba(255,255,255,0.7); line-height: 1.8;">
-                <strong style="color: #10B981;">✓ CBC Stable:</strong> All blood counts trending within normal range.
-                WBC recovered well (+25%).<br>
-                <strong style="color: #10B981;">✓ Kidney Function:</strong> eGFR of 103 indicates excellent kidney
-                health — no Daratumumab impact.<br>
-                <strong style="color: #F59E0B;">⚠ Electrolytes:</strong> Sodium (134) and Chloride (92) slightly low —
-                increase fluid intake.<br>
-                <strong style="color: #3B82F6;">→ Next Milestone:</strong> Week 4 labs will include disease markers to
-                assess treatment response.
+                <strong style="color: #10B981;">✓ CBC Stable:</strong> All blood counts trending within normal range. WBC stable at 8.0, Hemoglobin at 15.9, Platelets at 263.<br>
+                <strong style="color: #10B981;">✓ Kidney Function:</strong> eGFR of 108 indicates excellent kidney health — no Daratumumab impact.<br>
+                <strong style="color: #10B981;">✓ Electrolytes:</strong> Sodium (138) and Chloride (98) have fully normalized — electrolyte support successful.<br>
+                <strong style="color: #3B82F6;">→ Next Milestone:</strong> Month 9 evaluation in August 2026 will check disease markers to monitor response durability.
             </p>
         </div>
     </section>
@@ -543,10 +551,9 @@
         <div style="background: #F5F5F5; padding: 40px; margin-top: 40px; border-radius: 12px;" class="reveal">
             <h3 style="font-size: 18px; margin-bottom: 16px; font-weight: 500;">🎯 Key Decision Points</h3>
             <p style="color: #666; line-height: 1.8;">
-                <strong>Week 4 (Jan 18):</strong> First disease marker check — target ≥50% reduction in Free Kappa<br>
-                <strong>Month 3:</strong> Major response assessment — consider combo therapy if insufficient
-                response<br>
-                <strong>Month 4:</strong> First MRD (Minimal Residual Disease) test via bone marrow biopsy
+                <strong>Month 6 (May 2026):</strong> Mid-point disease marker evaluation completed. Free Kappa reduction maintained at 90.1%, M-Spike down 54.2%.<br>
+                <strong>Month 9 (August 2026):</strong> Next scheduled serum immunotyping, SPEP, and free light chain assay to assess depth of response.<br>
+                <strong>Month 12 (December 2026):</strong> 1-year response evaluation, including consideration for a repeat Bone Marrow Biopsy and MRD (Minimal Residual Disease) testing.
             </p>
         </div>
     </section>
@@ -722,8 +729,8 @@
     <!-- LABS - DARK SECTION -->
     <section class="section-dark" id="labs">
         <p class="eyebrow reveal">Laboratory Results</p>
-        <h2 class="display-large reveal" style="margin: 40px 0 20px;">Week 3</h2>
-        <p class="eyebrow reveal" style="margin-bottom: 80px;">January 9, 2026</p>
+        <h2 class="display-large reveal" style="margin: 40px 0 20px;">Week 27 Follow-up</h2>
+        <p class="eyebrow reveal" style="margin-bottom: 80px;">May 29, 2026</p>
 
         <div class="grid-2 reveal">
             <div>
@@ -731,23 +738,23 @@
                 <table>
                     <tr>
                         <td style="color: rgba(255,255,255,0.5);">WBC</td>
-                        <td style="text-align: right;"><span class="status-normal">9.0</span> K/μL</td>
+                        <td style="text-align: right;"><span class="status-normal">8.0</span> K/μL</td>
                     </tr>
                     <tr>
                         <td style="color: rgba(255,255,255,0.5);">Hemoglobin</td>
-                        <td style="text-align: right;"><span class="status-normal">17.0</span> g/dL</td>
+                        <td style="text-align: right;"><span class="status-normal">15.9</span> g/dL</td>
                     </tr>
                     <tr>
                         <td style="color: rgba(255,255,255,0.5);">Platelets</td>
-                        <td style="text-align: right;"><span class="status-normal">241</span> K/μL</td>
+                        <td style="text-align: right;"><span class="status-normal">263</span> K/μL</td>
                     </tr>
                     <tr>
                         <td style="color: rgba(255,255,255,0.5);">ANC</td>
-                        <td style="text-align: right;"><span class="status-normal">6.2</span> K/μL</td>
+                        <td style="text-align: right;"><span class="status-normal">5.0</span> K/μL</td>
                     </tr>
                     <tr>
                         <td style="color: rgba(255,255,255,0.5);">ALC</td>
-                        <td style="text-align: right;"><span class="status-normal">2.0</span> K/μL</td>
+                        <td style="text-align: right;"><span class="status-normal">2.1</span> K/μL</td>
                     </tr>
                 </table>
             </div>
@@ -756,23 +763,23 @@
                 <table>
                     <tr>
                         <td style="color: rgba(255,255,255,0.5);">Creatinine</td>
-                        <td style="text-align: right;"><span class="status-normal">0.78</span> mg/dL</td>
+                        <td style="text-align: right;"><span class="status-normal">0.66</span> mg/dL</td>
                     </tr>
                     <tr>
                         <td style="color: rgba(255,255,255,0.5);">eGFR</td>
-                        <td style="text-align: right;"><span class="status-normal">103</span> mL/min</td>
+                        <td style="text-align: right;"><span class="status-normal">108</span> mL/min</td>
                     </tr>
                     <tr>
                         <td style="color: rgba(255,255,255,0.5);">Calcium</td>
-                        <td style="text-align: right;"><span class="status-normal">9.5</span> mg/dL</td>
+                        <td style="text-align: right;"><span class="status-normal">9.9</span> mg/dL</td>
                     </tr>
                     <tr>
                         <td style="color: rgba(255,255,255,0.5);">Sodium</td>
-                        <td style="text-align: right;"><span class="status-warning">134</span> mmol/L ↓</td>
+                        <td style="text-align: right;"><span class="status-normal">138</span> mmol/L</td>
                     </tr>
                     <tr>
                         <td style="color: rgba(255,255,255,0.5);">Chloride</td>
-                        <td style="text-align: right;"><span class="status-warning">92</span> mmol/L ↓</td>
+                        <td style="text-align: right;"><span class="status-normal">98</span> mmol/L</td>
                     </tr>
                 </table>
             </div>
@@ -781,7 +788,7 @@
         <div style="margin-top: 80px; display: flex; gap: 20px;" class="reveal">
             <a href="lab-tracker.html" class="pill" style="border-color: white; color: white;">View All Lab History
                 →</a>
-            <a href="lab_jan_9_2026.pdf" class="pill" style="border-color: white; color: white;">Download PDF</a>
+            <a href="report-x-394556949.pdf" class="pill" style="border-color: white; color: white;">Download PDF</a>
         </div>
     </section>
 
@@ -791,6 +798,54 @@
         <h2 class="display-medium reveal" style="margin: 40px 0 80px;">Medical History</h2>
 
         <div class="reveal">
+            <!-- Accordion Item 0.1 -->
+            <div class="accordion-header"
+                style="display: flex; justify-content: space-between; align-items: center; padding: 24px; border: 1px solid #eee; margin-bottom: 8px; border-radius: 8px;">
+                <div>
+                    <div style="font-size: 13px; color: #666;">May 26-29, 2026</div>
+                    <div style="font-size: 18px; font-weight: 500; margin-top: 4px;">Week 27 Labs — 90% Free Kappa Reduction + Electrolytes Normal</div>
+                </div>
+                <span class="accordion-icon" style="font-size: 24px; color: #666;">+</span>
+            </div>
+            <div class="accordion-content"
+                style="padding: 0 24px; background: #f9f9f9; border-radius: 0 0 8px 8px; margin-bottom: 12px;">
+                <div style="padding: 24px 0;">
+                    <p style="color: #666; line-height: 1.8;">Serum Free Kappa at 64.74 mg/L represents a sustained 90.1% reduction from baseline. Total M-Spike is down to 0.49 g/dL (0.36 + 0.13), showing continuous tumor burden reduction. Sodium and Chloride have fully normalized (138 mmol/L and 98 mmol/L, respectively). Random urine free light chains show normal ratio (4.75).</p>
+                    <div style="display: flex; gap: 16px; margin-top: 16px;">
+                        <span
+                            style="background: #D1FAE5; color: #059669; padding: 4px 12px; border-radius: 100px; font-size: 12px;">Free Kappa: 64.74 ↓90.1%</span>
+                        <span
+                            style="background: #D1FAE5; color: #059669; padding: 4px 12px; border-radius: 100px; font-size: 12px;">M-Spike: 0.49 ↓54.2%</span>
+                        <span
+                            style="background: #D1FAE5; color: #059669; padding: 4px 12px; border-radius: 100px; font-size: 12px;">Sodium: 138 ✓</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Accordion Item 0.2 -->
+            <div class="accordion-header"
+                style="display: flex; justify-content: space-between; align-items: center; padding: 24px; border: 1px solid #eee; margin-bottom: 8px; border-radius: 8px;">
+                <div>
+                    <div style="font-size: 13px; color: #666;">April 16-30, 2026</div>
+                    <div style="font-size: 18px; font-weight: 500; margin-top: 4px;">Week 21-23 Labs — First Normal Sodium + Stable CBC</div>
+                </div>
+                <span class="accordion-icon" style="font-size: 24px; color: #666;">+</span>
+            </div>
+            <div class="accordion-content"
+                style="padding: 0 24px; background: #f9f9f9; border-radius: 0 0 8px 8px; margin-bottom: 12px;">
+                <div style="padding: 24px 0;">
+                    <p style="color: #666; line-height: 1.8;">CBC remains completely stable. Metabolic panel on April 30 shows first fully normalized Sodium at 136 mmol/L, resolving the persistent hyponatremia. Kidney function remains excellent (eGFR 105).</p>
+                    <div style="display: flex; gap: 16px; margin-top: 16px;">
+                        <span
+                            style="background: #D1FAE5; color: #059669; padding: 4px 12px; border-radius: 100px; font-size: 12px;">Sodium: 136 ✓</span>
+                        <span
+                            style="background: #D1FAE5; color: #059669; padding: 4px 12px; border-radius: 100px; font-size: 12px;">eGFR: 105 ✓</span>
+                        <span
+                            style="background: #D1FAE5; color: #059669; padding: 4px 12px; border-radius: 100px; font-size: 12px;">WBC: 6.0 ✓</span>
+                    </div>
+                </div>
+            </div>
+
             <!-- Accordion Item 1 -->
             <div class="accordion-header"
                 style="display: flex; justify-content: space-between; align-items: center; padding: 24px; border: 1px solid #eee; margin-bottom: 8px; border-radius: 8px;">
@@ -1213,14 +1268,19 @@
             const wbcStatus = getStatus(latest.wbc, 4.0, 11.0);
             const egfrStatus = latest.egfr >= 90 ? { status: 'excellent', bg: '#F0FDF4', border: '#BBF7D0', color: '#166534', label: 'EXCELLENT' } : getStatus(latest.egfr, 60, 150);
             const sodiumStatus = getStatus(latest.sodium, 135, 145);
-            const freeKappaStatus = latest.freeKappa ? { status: 'elevated', bg: '#FEF2F2', border: '#FECACA', color: '#991B1B', label: 'PENDING' } : { status: 'unknown', bg: '#F5F5F5', border: '#E5E5E5', color: '#666', label: 'N/A' };
+            const freeKappaStatus = latest.freeKappa ? 
+                (latest.freeKappa <= 328 ? 
+                    { status: 'normal', bg: '#F0FDF4', border: '#BBF7D0', color: '#166534', label: 'RESP MET' } : 
+                    { status: 'elevated', bg: '#FEF2F2', border: '#FECACA', color: '#991B1B', label: 'ELEVATED' }
+                ) : { status: 'unknown', bg: '#F5F5F5', border: '#E5E5E5', color: '#666', label: 'N/A' };
 
             const labelColors = {
                 'NORMAL': '#10B981',
                 'EXCELLENT': '#10B981',
                 'LOW': '#F59E0B',
                 'HIGH': '#EF4444',
-                'PENDING': '#EF4444',
+                'RESP MET': '#10B981',
+                'ELEVATED': '#EF4444',
                 'N/A': '#666'
             };
 
@@ -1343,7 +1403,7 @@
                     </tr>
                     <tr>
                         <td style="color: rgba(255,255,255,0.5);">Chloride</td>
-                        <td style="text-align: right;"><span class="status-normal">—</span> mmol/L</td>
+                        <td style="text-align: right;"><span class="${getStatusClass(latest.chloride, 98, 108)}">${latest.chloride || '—'}</span> mmol/L</td>
                     </tr>
                 `;
             }

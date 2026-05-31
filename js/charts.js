@@ -99,19 +99,19 @@ class MedicalCharts {
 
     getDefaultLabData() {
         return {
-            dates: ['Nov 7', 'Dec 26', 'Jan 2', 'Jan 9', 'Jan 16'],
-            weeks: ['Baseline', 'Day 5', 'Week 2', 'Week 3', 'Week 4'],
-            wbc: [7.8, 9.4, 7.2, 9.0, 7.2],
-            hemoglobin: [14.2, 16.4, 15.3, 17.0, 15.8],
-            platelets: [245, 293, 203, 241, 254],
-            anc: [null, 5.3, 4.1, 6.2, 4.1],
-            alc: [null, 3.1, 2.3, 2.0, 2.3],
-            egfr: [null, null, null, 103, 104],
-            sodium: [null, null, null, 134, 134],
-            calcium: [null, null, null, 9.5, 9.2],
-            creatinine: [null, null, null, 0.78, 0.76],
-            freeKappa: [655.69, null, null, null, null],
-            mSpike: [1.07, null, null, null, null]
+            dates: ['Nov 7', 'Dec 26', 'Jan 2', 'Jan 9', 'Jan 16', 'Jan 23', 'Jan 30', 'Feb 4', 'Feb 5', 'Apr 16', 'Apr 30', 'May 14', 'May 26', 'May 29'],
+            weeks: ['Baseline', 'Day 5', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 9', 'Week 10', 'Week 11', 'Week 21', 'Week 23', 'Week 25', 'Week 27', 'Week 27 Follow-up'],
+            wbc: [7.8, 9.4, 7.2, 9.0, 7.2, 10.3, 8.7, 13.5, 10.2, 6.2, 6.0, 8.8, 8.0, 8.0],
+            hemoglobin: [14.2, 16.4, 15.3, 17.0, 15.8, 15.8, 15.0, 15.1, 15.1, 14.2, 15.5, 14.9, 16.5, 15.9],
+            platelets: [245, 293, 203, 241, 254, 279, 237, 262, 252, 188, 272, 213, 257, 263],
+            anc: [null, 5.3, 4.1, 6.2, 4.1, 6.3, 5.5, 11.6, 6.3, 3.6, 3.2, 5.9, 5.3, 5.0],
+            alc: [null, 3.1, 2.3, 2.0, 2.3, 2.5, 2.1, 0.7, 2.3, 1.8, 1.8, 2.1, 1.8, 2.1],
+            egfr: [null, null, null, 103, 104, null, 104, 101, 106, null, 105, null, 106, 108],
+            sodium: [null, null, null, 134, 134, null, 134, 127, 128, null, 136, null, 139, 138],
+            calcium: [null, null, null, 9.5, 9.2, null, 9.6, 10.2, 9.4, null, 9.8, null, 10.4, 9.9],
+            creatinine: [null, null, null, 0.78, 0.76, null, 0.75, 0.83, 0.70, null, 0.74, null, 0.70, 0.66],
+            freeKappa: [655.69, null, null, null, null, null, 96.07, null, 52.48, null, null, null, 64.74, null],
+            mSpike: [1.07, null, null, null, null, null, 0.63, null, 0.75, null, null, null, 0.49, null]
         };
     }
 
@@ -205,32 +205,39 @@ class MedicalCharts {
         if (!ctx) return;
 
         // Get actual Free Kappa values from data
-        const actualFreeKappa = this.labData.freeKappa.filter(v => v !== null);
-        const baselineFreeKappa = actualFreeKappa[0] || 655.69;
+        const markersData = [];
+        for (let i = 0; i < this.labData.weeks.length; i++) {
+            if (this.labData.freeKappa[i] !== null) {
+                markersData.push({
+                    week: this.labData.weeks[i],
+                    value: this.labData.freeKappa[i]
+                });
+            }
+        }
 
-        // Project future values (target 50% reduction)
-        const projectedFreeKappa = [baselineFreeKappa, baselineFreeKappa * 0.76, baselineFreeKappa * 0.61, baselineFreeKappa * 0.5, baselineFreeKappa * 0.3, baselineFreeKappa * 0.15];
-        const projectedLabels = ['Baseline', 'Week 2', 'Week 4', 'Week 8', 'Week 12', 'Week 16'];
+        const baselineFreeKappa = markersData[0]?.value || 655.69;
+        const chartWeeks = markersData.map(d => d.week);
+        const chartValues = markersData.map(d => d.value);
 
         this.chartInstances.disease = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: projectedLabels,
+                labels: chartWeeks,
                 datasets: [
                     {
                         label: 'Free Kappa (mg/L)',
-                        data: projectedFreeKappa,
+                        data: chartValues,
                         borderColor: '#EF4444',
                         backgroundColor: 'rgba(239, 68, 68, 0.1)',
                         tension: 0.3,
                         fill: true,
-                        pointRadius: [8, 0, 0, 0, 0, 0],
+                        pointRadius: 6,
                         pointBackgroundColor: '#EF4444',
-                        borderDash: [0, 0, 5, 5]
+                        borderWidth: 3
                     },
                     {
                         label: `Target Zone (≤${Math.round(baselineFreeKappa / 2)})`,
-                        data: Array(6).fill(baselineFreeKappa / 2),
+                        data: Array(chartWeeks.length).fill(baselineFreeKappa / 2),
                         borderColor: '#10B981',
                         borderDash: [5, 5],
                         borderWidth: 2,
@@ -253,7 +260,7 @@ class MedicalCharts {
                     ...this.chartDefaults.plugins,
                     title: {
                         display: true,
-                        text: 'Free Kappa Trajectory — Target ≥50% Reduction',
+                        text: 'Free Kappa Trajectory — Actual Response',
                         font: { family: 'Inter', size: 16, weight: 500 },
                         padding: { bottom: 20 }
                     }
@@ -435,12 +442,11 @@ class MedicalCharts {
 
 // Future Milestones Data
 const futureMilestones = [
-    { date: 'Jan 18, 2026', type: 'labs', title: 'Week 4 Labs + Disease Markers', description: 'Free Kappa, M-Spike, CBC. Target: ≥50% reduction in Free Kappa.', priority: 'high' },
-    { date: 'Jan 25, 2026', type: 'infusion', title: 'Daratumumab Infusion #5', description: 'Weekly dosing continues. Monitor for infusion reactions.', priority: 'normal' },
-    { date: 'Feb 1, 2026', type: 'labs', title: 'Week 6 Labs', description: 'CBC + CMP. Assess electrolyte recovery.', priority: 'normal' },
-    { date: 'Feb 15, 2026', type: 'appointment', title: 'Follow-up with Dr. Bagai', description: 'Review response data, discuss treatment adjustments if needed.', priority: 'high' },
-    { date: 'Mar 2026', type: 'decision', title: 'Month 3 Assessment', description: 'Evaluate overall response. Consider combo therapy if insufficient.', priority: 'critical' },
-    { date: 'Apr 2026', type: 'test', title: 'First MRD Test', description: 'Minimal Residual Disease assessment via bone marrow.', priority: 'high' }
+    { date: 'June 26, 2026', type: 'labs', title: 'Monthly CBC + CMP Labs', description: 'Monitor blood counts and electrolyte levels. Assess ongoing recovery.', priority: 'normal' },
+    { date: 'July 10, 2026', type: 'infusion', title: 'Daratumumab Infusion (Cycle 7, Dose 2)', description: 'Monthly maintenance dosing. Monitor clinical tolerance.', priority: 'normal' },
+    { date: 'August 28, 2026', type: 'labs', title: 'Month 9 Response Evaluation', description: 'Full disease markers check: Free Kappa, M-Spike, CBC/CMP, Immunotyping.', priority: 'high' },
+    { date: 'September 4, 2026', type: 'appointment', title: 'Dr. Bagai Follow-up Consultation', description: 'Review Month 9 marker results, discuss durability and maintenance plan.', priority: 'high' },
+    { date: 'December 2026', type: 'decision', title: '1-Year Response Assessment', description: 'Repeat bone marrow biopsy, flow cytometry, and MRD status evaluation.', priority: 'critical' }
 ];
 
 function renderMilestones(containerId) {

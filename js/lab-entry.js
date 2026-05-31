@@ -5,6 +5,15 @@ class LabTracker {
     constructor() {
         this.storageKey = 'ericMillerLabResults';
         this.labs = this.loadLabs();
+        
+        // Versioning check: if the user has fewer labs than our new default dataset, update to include the new data
+        const defaultLabs = this.getDefaultLabs();
+        if (this.labs.length < defaultLabs.length) {
+            this.labs = defaultLabs;
+            this.saveLabs();
+            console.log("Updated localStorage labs data to latest version.");
+        }
+
         this.referenceRanges = {
             wbc: { min: 4.0, max: 11.0, unit: 'K/μL', name: 'WBC' },
             hemoglobin: { min: 13.5, max: 17.0, unit: 'g/dL', name: 'Hemoglobin' },
@@ -15,8 +24,11 @@ class LabTracker {
             egfr: { min: 60, max: 150, unit: 'mL/min', name: 'eGFR' },
             calcium: { min: 8.7, max: 10.4, unit: 'mg/dL', name: 'Calcium' },
             sodium: { min: 135, max: 145, unit: 'mmol/L', name: 'Sodium' },
+            chloride: { min: 98, max: 108, unit: 'mmol/L', name: 'Chloride' },
+            glucose: { min: 70, max: 99, unit: 'mg/dL', name: 'Glucose' },
             freeKappa: { min: 0.33, max: 1.94, unit: 'mg/L', name: 'Free Kappa' },
-            mSpike: { min: 0, max: 0.3, unit: 'g/dL', name: 'M-Spike' }
+            mSpike: { min: 0, max: 0.3, unit: 'g/dL', name: 'M-Spike' },
+            b2m: { min: 0.8, max: 2.4, unit: 'mg/L', name: 'Beta-2-Microglobulin' }
         };
     }
 
@@ -31,11 +43,20 @@ class LabTracker {
 
     getDefaultLabs() {
         return [
-            { date: '2025-11-07', week: 'Baseline', wbc: 7.8, hemoglobin: 14.2, platelets: 245, freeKappa: 655.69, mSpike: 1.07 },
+            { date: '2025-11-07', week: 'Baseline', wbc: 7.8, hemoglobin: 14.2, platelets: 245, freeKappa: 655.69, ratio: 52.41, mSpike: 1.07 },
             { date: '2025-12-26', week: 'Day 5', wbc: 9.4, hemoglobin: 16.4, platelets: 293, anc: 5.3, alc: 3.1 },
             { date: '2026-01-02', week: 'Week 2', wbc: 7.2, hemoglobin: 15.3, platelets: 203, anc: 4.1, alc: 2.3 },
-            { date: '2026-01-09', week: 'Week 3', wbc: 9.0, hemoglobin: 17.0, platelets: 241, anc: 6.2, alc: 2.0, creatinine: 0.78, egfr: 103, sodium: 134, calcium: 9.5 },
-            { date: '2026-01-16', week: 'Week 4', wbc: 7.2, hemoglobin: 15.8, platelets: 254, anc: 4.1, alc: 2.3, creatinine: 0.76, egfr: 104, sodium: 134, calcium: 9.2, glucose: 103 }
+            { date: '2026-01-09', week: 'Week 3', wbc: 9.0, hemoglobin: 17.0, platelets: 241, anc: 6.2, alc: 2.0, creatinine: 0.78, egfr: 103, sodium: 134, chloride: 92, calcium: 9.5 },
+            { date: '2026-01-16', week: 'Week 4', wbc: 7.2, hemoglobin: 15.8, platelets: 254, anc: 4.1, alc: 2.3, creatinine: 0.76, egfr: 104, sodium: 134, calcium: 9.2, glucose: 103 },
+            { date: '2026-01-23', week: 'Week 5', wbc: 10.3, hemoglobin: 15.8, platelets: 279, anc: 6.3, alc: 2.5 },
+            { date: '2026-01-30', week: 'Week 9', wbc: 8.7, hemoglobin: 15.0, platelets: 237, anc: 5.5, alc: 2.1, creatinine: 0.75, egfr: 104, sodium: 134, chloride: 90, calcium: 9.6, glucose: 97, freeKappa: 96.07, ratio: 14.47, mSpike: 0.63, b2m: 1.8 },
+            { date: '2026-02-04', week: 'Week 10', wbc: 13.5, hemoglobin: 15.1, platelets: 262, anc: 11.6, alc: 0.7, creatinine: 0.83, egfr: 101, sodium: 127, chloride: 85, calcium: 10.2, glucose: 116 },
+            { date: '2026-02-05', week: 'Week 11', wbc: 10.2, hemoglobin: 15.1, platelets: 252, anc: 6.3, alc: 2.3, creatinine: 0.70, egfr: 106, sodium: 128, chloride: 88, calcium: 9.4, glucose: 86, freeKappa: 52.48, ratio: 18.48, mSpike: 0.75, b2m: 1.3 },
+            { date: '2026-04-16', week: 'Week 21', wbc: 6.2, hemoglobin: 14.2, platelets: 188, anc: 3.6, alc: 1.8 },
+            { date: '2026-04-30', week: 'Week 23', wbc: 6.0, hemoglobin: 15.5, platelets: 272, anc: 3.2, alc: 1.8, creatinine: 0.74, egfr: 105, sodium: 136, chloride: 94, calcium: 9.8, glucose: 84 },
+            { date: '2026-05-14', week: 'Week 25', wbc: 8.8, hemoglobin: 14.9, platelets: 213, anc: 5.9, alc: 2.1 },
+            { date: '2026-05-26', week: 'Week 27', wbc: 8.0, hemoglobin: 16.5, platelets: 257, anc: 5.3, alc: 1.8, creatinine: 0.70, egfr: 106, sodium: 139, chloride: 97, calcium: 10.4, glucose: 74, freeKappa: 64.74, ratio: 18.71, mSpike: 0.49, b2m: 1.8 },
+            { date: '2026-05-29', week: 'Week 27 Follow-up', wbc: 8.0, hemoglobin: 15.9, platelets: 263, anc: 5.0, alc: 2.1, creatinine: 0.66, egfr: 108, sodium: 138, chloride: 98, calcium: 9.9, glucose: 88 }
         ];
     }
 
